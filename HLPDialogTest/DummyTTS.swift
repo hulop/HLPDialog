@@ -24,7 +24,7 @@ import UIKit
 import HLPDialog
 
 class DummyTTS: TTSProtocol {
-    func speak(_ text:String?, callback: @escaping (Void)->Void) {
+    func speak(_ text:String?, callback: @escaping ()->Void) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             callback()
         }

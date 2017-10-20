@@ -172,8 +172,7 @@ public class CustomLeftTableViewCellSpeaking : CustomLeftTableViewCell{
     }
     override func drawMessageText(_ text:String, x:CGFloat, y:CGFloat, width:CGFloat, height: CGFloat){
         self.textbuff = text
-        let len:Int = text.characters.count
-        let sidx:String.Index = text.startIndex
+        let len:Int = text.count
         var idx:Int = 1
         
         self.timer = Timer.scheduledTimer(timeInterval: 0.15, target: BlockOperation(block: {
@@ -181,7 +180,7 @@ public class CustomLeftTableViewCellSpeaking : CustomLeftTableViewCell{
                 self.showAllText()
             }else{
                 self.message.frame = CGRect(x: x, y: y, width: width, height: height)
-                self.message.text = text.substring(to: text.index(sidx, offsetBy: idx))
+                self.message.text = String(text.prefix(idx))
                 self.message.sizeToFit()
                 self.layoutMessageArea()
                 idx = idx + 1

@@ -88,7 +88,7 @@ class ViewController: UIViewController, DialogViewDelegate {
         
     }
     
-    func dialogStatusChanged(note:NSNotification) {
+    @objc func dialogStatusChanged(note:NSNotification) {
         self.updateView()
     }
 

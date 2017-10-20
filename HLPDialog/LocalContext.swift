@@ -45,7 +45,7 @@ open class LocalContext: NSObject{
     }
     
     fileprivate func verifyAudioAccess() {
-        AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeAudio, completionHandler: {(granted: Bool) in
+        AVCaptureDevice.requestAccess(for: AVMediaType.audio, completionHandler: {(granted: Bool) in
             if granted {
                 self.verifySpeechRecoAccess()
             } else {

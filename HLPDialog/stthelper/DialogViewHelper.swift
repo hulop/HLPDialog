@@ -581,13 +581,13 @@ public class DialogViewHelper: NSObject {
     var text:String?
     public func showText(_ text:String) {
         
-        let len = text.characters.count
+        let len = text.count
         
         if let currentText = self.label.text {
-            if currentText.characters.count < len ||
-                self.label.text?.substring(to: (self.label.text?.characters.index((self.label.text?.startIndex)!, offsetBy: len-1))!) != text {
+            if currentText.count < len ||
+                self.label.text?.prefix(len-1).description != text {
                     textTimer?.invalidate()
-                    textPos = (self.label.text?.characters.count)!
+                    textPos = (self.label.text?.count)!
                     textTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(DialogViewHelper.showText2(_:)), userInfo: nil, repeats: true)
             }
         } else {
@@ -597,11 +597,11 @@ public class DialogViewHelper: NSObject {
         NSLog("showText: \(text)")
     }
     
-    func showText2(_ timer:Timer) {
+    @objc func showText2(_ timer:Timer) {
         self.textPos += 1
         var part = self.text
-        if (self.textPos < (self.text?.characters.count)!) {
-            part = self.text?.substring(to: (self.text?.characters.index((self.text?.startIndex)!, offsetBy: self.textPos-1))!)
+        if (self.textPos < (self.text?.count)!) {
+            part = self.text?.prefix(self.textPos-1).description
         }
         DispatchQueue.main.async {
  //           NSLog("showLabel: \(part)")
@@ -611,7 +611,7 @@ public class DialogViewHelper: NSObject {
     
     // MARK: - Utility Function
     
-    static func delay(_ delay:Double, callback: @escaping (Void)->Void) {
+    static func delay(_ delay:Double, callback: @escaping ()->Void) {
         let time = DispatchTime.now() + Double((Int64)(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC);
         DispatchQueue.main.asyncAfter(deadline: time) {
             callback()

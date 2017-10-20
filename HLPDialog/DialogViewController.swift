@@ -210,7 +210,7 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
         self.refreshTableView()
     }
     
-    internal func requestDialogEnd() {
+    @objc internal func requestDialogEnd() {
         if cancellable {
             _ = self.navigationController?.popToRootViewController(animated: true)
         } else {
@@ -218,7 +218,7 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
 
-    internal func requestDialogAction() {
+    @objc internal func requestDialogAction() {
         self.dialogViewTapped()
     }
     
@@ -253,7 +253,7 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
-    internal func pauseConversation() {
+    @objc internal func pauseConversation() {
         let bundle = Bundle(for: type(of: self))
         
         let stt = self.getStt()
@@ -559,7 +559,7 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
                 for i in 0 ..< result.count {
                     var temp: [String] = []
                     for j in 0 ..< result[i].numberOfRanges{
-                        temp.append(nsstr.substring(with: result[i].rangeAt(j)))
+                        temp.append(nsstr.substring(with: result[i].range(at: j)))
                     }
                     ret.append(temp)
                 }
@@ -616,7 +616,7 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
         self.removeWaiting()
         self.tableData.append(["name": agent_name, "type": 1,  "image": "conversation.png", "message": restxt])
         self.refreshTableView()
-        var postEndDialog:((Void)->Void)? = nil
+        var postEndDialog:(()->Void)? = nil
         if let fin:Bool = cc["finish"] as? Bool{
             if fin {
                 postEndDialog = {
@@ -806,11 +806,11 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
                 }
             })],
                  avrdelegate: nil,
-                 failure:{[weak self] (e)in
+                 failure:{[weak self] (e) in
                 if let weakself = self {
                     weakself.failureCustom(e)
             }},
-                 timeout:{[weak self] ()in
+                 timeout:{[weak self] in
                 if let weakself = self {
                     weakself.timeoutCustom()
             }})
@@ -858,12 +858,11 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
             if let weakself = self {
                 weakself.failureCustom(e)
             }
-        }, timeout:{[weak self] (e)in
+        }, timeout:{[weak self] in
             if let weakself = self {
-                weakself.timeoutCustom(e)
+                weakself.timeoutCustom()
             }
         })
-        
     }
     
     func endDialog(_ response:String){
@@ -925,7 +924,7 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
         stt.endRecognize()
         stt.delegate = self.dialogViewHelper
         
-        stt.listen([([".*"], {[weak self] str in
+        stt.listen([([".*"], {[weak self] (_,_) in
             if let weakself = self {
                 weakself.sendmessage("")
             }

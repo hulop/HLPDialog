@@ -21,6 +21,7 @@
 		7EDAFE811F29E64B00368058 /* ConversationV1.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD958B1F21DBFF00A00D5D /* ConversationV1.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7EDAFE821F29E65500368058 /* RestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD95891F21DBE100A00D5D /* RestKit.framework */; };
 		7EDAFE831F29E65500368058 /* RestKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD95891F21DBE100A00D5D /* RestKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A9791D8E1F90A7FB00631165 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9791D8D1F90A7FB00631165 /* AVFoundation.framework */; };
 		A9CD958A1F21DBE100A00D5D /* RestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD95891F21DBE100A00D5D /* RestKit.framework */; };
 		A9CD958C1F21DBFF00A00D5D /* ConversationV1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD958B1F21DBFF00A00D5D /* ConversationV1.framework */; };
 		A9CD958E1F21DCFA00A00D5D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD958D1F21DCFA00A00D5D /* Foundation.framework */; };
@@ -75,6 +76,7 @@
 		7EDAFE701F29DB4400368058 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7EDAFE721F29DB4400368058 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7EDAFE7B1F29E0DA00368058 /* DummyTTS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DummyTTS.swift; sourceTree = "<group>"; };
+		A9791D8D1F90A7FB00631165 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		A9CD957C1F21D5DE00A00D5D /* HLPDialog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HLPDialog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9CD95801F21D5DE00A00D5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9CD95891F21DBE100A00D5D /* RestKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RestKit.framework; path = Carthage/Build/iOS/RestKit.framework; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9791D8E1F90A7FB00631165 /* AVFoundation.framework in Frameworks */,
 				A9CD958C1F21DBFF00A00D5D /* ConversationV1.framework in Frameworks */,
 				A9CD958E1F21DCFA00A00D5D /* Foundation.framework in Frameworks */,
 				A9CD958A1F21DBE100A00D5D /* RestKit.framework in Frameworks */,
@@ -174,6 +177,7 @@
 		A9CD95881F21DBE100A00D5D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A9791D8D1F90A7FB00631165 /* AVFoundation.framework */,
 				A9CD958B1F21DBFF00A00D5D /* ConversationV1.framework */,
 				A9CD958D1F21DCFA00A00D5D /* Foundation.framework */,
 				A9CD95891F21DBE100A00D5D /* RestKit.framework */,
@@ -267,11 +271,12 @@
 				TargetAttributes = {
 					7EDAFE631F29DB4400368058 = {
 						CreatedOnToolsVersion = 8.3.3;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Manual;
 					};
 					A9CD957B1F21D5DE00A00D5D = {
 						CreatedOnToolsVersion = 8.3.3;
-						LastSwiftMigration = 0830;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Manual;
 					};
 				};
@@ -409,6 +414,8 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -419,7 +426,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.hulop.HLPDialogTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -428,6 +435,8 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -438,7 +447,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.hulop.HLPDialogTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -582,7 +591,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "$(SWIFT_MODULE_NAME).h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -611,7 +620,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "$(SWIFT_MODULE_NAME).h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

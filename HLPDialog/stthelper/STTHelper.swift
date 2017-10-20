@@ -43,7 +43,7 @@ open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SF
     public var restarting:Bool = true
     var last_actions: [([String],(String, UInt64)->Void)]?
     var last_failure:(NSError)->Void = {arg in}
-    var last_timeout:(Void)->Void = {arg in}
+    var last_timeout:()->Void = { () in}
     var last_text: String = ""
     var listeningStart:Double = 0
     var avePower:Double = 0
@@ -104,10 +104,10 @@ open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SF
         if self.frecCaptureSession != nil{
             self.frecCaptureSession?.stopRunning()
             for output in self.frecCaptureSession!.outputs{
-                self.frecCaptureSession?.removeOutput(output as! AVCaptureOutput)
+                self.frecCaptureSession?.removeOutput(output )
             }
             for input in self.frecCaptureSession!.inputs{
-                self.frecCaptureSession?.removeInput(input as! AVCaptureInput)
+                self.frecCaptureSession?.removeInput(input )
             }
             self.frecCaptureSession = nil
         }
@@ -124,10 +124,10 @@ open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SF
         if nil == self.pwCaptureSession{
             self.pwCaptureSession = AVCaptureSession()
             if let captureSession = self.pwCaptureSession{
-                let microphoneDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeAudio)
-                let microphoneInput = try? AVCaptureDeviceInput(device: microphoneDevice)
-                if(captureSession.canAddInput(microphoneInput)){
-                    captureSession.addInput(microphoneInput)
+                let microphoneDevice = AVCaptureDevice.default(for: .audio)
+                let microphoneInput = try? AVCaptureDeviceInput(device: microphoneDevice!)
+                if(captureSession.canAddInput(microphoneInput!)){
+                    captureSession.addInput(microphoneInput!)
                     let adOutput = AVCaptureAudioDataOutput()
                     adOutput.setSampleBufferDelegate(self, queue: self.audioDataQueue)
                     if captureSession.canAddOutput(adOutput){
@@ -142,12 +142,12 @@ open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SF
         self.pwCaptureSession?.stopRunning()
     }
 
-    open func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, from connection: AVCaptureConnection!) {
+    open func captureOutput(_ captureOutput: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         recognitionRequest?.appendAudioSampleBuffer(sampleBuffer)                
         
         let channels = connection.audioChannels
         var peak:Float = 0;
-        for chnl in channels!{
+        for chnl in channels{
             peak = (chnl as AnyObject).averagePowerLevel
         }
         DispatchQueue.main.async{
@@ -173,7 +173,7 @@ open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SF
         self.ametertimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(STTHelper.onamUpdate),userInfo:nil, repeats:true)
         self.ametertimer?.fire()
     }
-    func onamUpdate(){
+    @objc func onamUpdate(){
         self.arecorder?.updateMeters()
         if let ave = self.arecorder?.averagePower(forChannel: 0){
             self.delegate?.setMaxPower(ave + 120)
@@ -189,7 +189,7 @@ open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SF
         self.stopAudioRecorder()
     }
     
-    func startRecognize(_ actions: [([String],(String, UInt64)->Void)], failure: @escaping (NSError)->Void,  timeout: @escaping (Void)->Void){
+    func startRecognize(_ actions: [([String],(String, UInt64)->Void)], failure: @escaping (NSError)->Void,  timeout: @escaping ()->Void){
         self.paused = false
         
         let audioSession:AVAudioSession = AVAudioSession.sharedInstance()
@@ -209,8 +209,8 @@ open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SF
             guard let weakself = self else {
                 return
             }
-            let complete:(Void)->Void = {
-                if weakself.last_text.characters.count == 0 { return }
+            let complete:()->Void = {
+                if weakself.last_text.count == 0 { return }
                 for action in actions {
                     let patterns = action.0
                     for pattern in patterns {
@@ -279,9 +279,9 @@ open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SF
             
             let str = weakself.last_text
             let isFinal:Bool = (result?.isFinal)!;
-            let length:Int = str.characters.count
+            let length:Int = str.count
             NSLog("Result = \(str), Length = \(length), isFinal = \(isFinal)");
-            if (str.characters.count > 0) {
+            if (str.count > 0) {
                 weakself.delegate?.showText(str);
                 if isFinal{
                     complete()
@@ -325,7 +325,7 @@ open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SF
         return Timer.scheduledTimer(timeInterval: delay, target: BlockOperation(block: block), selector: #selector(Operation.main), userInfo: nil, repeats: false)
     }
     
-    public func listen(_ actions: [([String],(String, UInt64)->Void)], selfvoice: String?, speakendactions:[((String)->Void)]?,avrdelegate:AVAudioRecorderDelegate?, failure:@escaping (NSError)->Void, timeout:@escaping (Void)->Void) {
+    public func listen(_ actions: [([String],(String, UInt64)->Void)], selfvoice: String?, speakendactions:[((String)->Void)]?,avrdelegate:AVAudioRecorderDelegate?, failure:@escaping (NSError)->Void, timeout:@escaping ()->Void) {
         
         if (speaking) {
             NSLog("TTS is speaking so this listen is eliminated")
@@ -428,7 +428,7 @@ open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SF
             do {
                 var regex:NSRegularExpression?;
                 try regex = NSRegularExpression(pattern: pattern!, options: NSRegularExpression.Options.caseInsensitive)
-                if (regex?.matches(in: text!, options: NSRegularExpression.MatchingOptions.reportProgress, range: NSMakeRange(0, (text?.characters.count)!)).count)! > 0 {
+                if (regex?.matches(in: text!, options: NSRegularExpression.MatchingOptions.reportProgress, range: NSMakeRange(0, (text?.count)!)).count)! > 0 {
                     return true
                 }
             } catch {

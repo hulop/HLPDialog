@@ -21,6 +21,8 @@ xcuserdata/
 *.dSYM.zip
 *.dSYM
 
-Carthage/
+project.xcworkspace/
 
-HLPDialog.framework.zip
+Carthage/
+*.framework.zip
+
