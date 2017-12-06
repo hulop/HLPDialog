@@ -70,11 +70,23 @@ public enum DialogViewState:String {
 public class HelperView: UIView {
     var delegate: DialogViewDelegate?
     var bTabEnabled:Bool=false  // tap availability
+    var disabled:Bool = false {
+        didSet {
+            self.accessibilityTraits = UIAccessibilityTraitButton | UIAccessibilityTraitStaticText
+            if (disabled) {
+                self.accessibilityTraits = self.accessibilityTraits | UIAccessibilityTraitNotEnabled
+                self.layer.opacity = 0.25
+            } else {
+                self.layer.opacity = 1.0
+            }
+        }
+    }
     
     override public init(frame: CGRect) {
         super.init(frame: frame)
         self.accessibilityLabel = NSLocalizedString("DialogSearch", tableName:nil, bundle: Bundle(for: type(of: self)), value: "", comment:"")
         self.isAccessibilityElement = true
+        self.accessibilityTraits = UIAccessibilityTraitButton | UIAccessibilityTraitStaticText | UIAccessibilityTraitNotEnabled
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -82,10 +94,16 @@ public class HelperView: UIView {
     }    
  
     override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if (self.disabled) {
+            return;
+        }
         self.layer.opacity = 0.5
     }
     
     override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if (self.disabled) {
+            return;
+        }
         self.layer.opacity = 1.0
         delegate?.dialogViewTapped()
     }
