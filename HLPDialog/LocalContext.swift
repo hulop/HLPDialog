@@ -24,12 +24,14 @@ import UIKit
 import Foundation
 import Speech
 
+@objc
 public protocol LocalContextDelegate{
     func onContextChange(_ context:LocalContext)
     func showNoAudioAccessAlert()
     func showNoSpeechRecoAlert()
 }
 
+@objcMembers
 open class LocalContext: NSObject{
     fileprivate var context:[String:Any] = [:]
     fileprivate var localvariables:[String:Any] = [:]

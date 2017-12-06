@@ -63,14 +63,16 @@ public enum DialogViewState:String {
     }
 }
 
-@objc public protocol DialogViewDelegate {
+@objc
+public protocol DialogViewDelegate {
     func dialogViewTapped()
 }
 
+@objcMembers
 public class HelperView: UIView {
     var delegate: DialogViewDelegate?
     var bTabEnabled:Bool=false  // tap availability
-    var disabled:Bool = false {
+    public var disabled:Bool = false {
         didSet {
             self.accessibilityTraits = UIAccessibilityTraitButton | UIAccessibilityTraitStaticText
             if (disabled) {
@@ -109,6 +111,7 @@ public class HelperView: UIView {
     }
 }
 
+@objcMembers
 public class DialogViewHelper: NSObject {
     fileprivate var initialized: Bool = false
     
@@ -404,7 +407,7 @@ public class DialogViewHelper: NSObject {
     
     // MARK: - Anim Functions
     
-    @objc fileprivate func recognizeAnim() {
+    fileprivate func recognizeAnim() {
         NSLog("recognize anim")
         reset()
         circle.color = mainColor
@@ -419,7 +422,7 @@ public class DialogViewHelper: NSObject {
         mic.opacity = 1
     }
     
-    @objc fileprivate func listenpopAnim() {
+    fileprivate func listenpopAnim() {
         NSLog("pop anim")
         reset()
         indicatorCenter.opacity = 1
@@ -487,7 +490,7 @@ public class DialogViewHelper: NSObject {
         self.indicatorCenter.setNeedsDisplay()
     }
     
-    @objc fileprivate func shrinkAnim(_ sel:Selector) {
+    fileprivate func shrinkAnim(_ sel:Selector) {
         if (mic.opacity == 0) {
             Timer.scheduledTimer(timeInterval: 0, target: self, selector: sel, userInfo: nil, repeats: false)
             return
@@ -570,7 +573,7 @@ public class DialogViewHelper: NSObject {
         indicatorRight.add(pulse, forKey: "speak1")
     }
     
-    @objc fileprivate func inactiveAnim() {
+    fileprivate func inactiveAnim() {
         reset()
         indicatorCenter.opacity = 0
         indicatorLeft.opacity = 0
@@ -615,7 +618,7 @@ public class DialogViewHelper: NSObject {
         NSLog("showText: \(text)")
     }
     
-    @objc func showText2(_ timer:Timer) {
+    func showText2(_ timer:Timer) {
         self.textPos += 1
         var part = self.text
         if (self.textPos < (self.text?.count)!) {

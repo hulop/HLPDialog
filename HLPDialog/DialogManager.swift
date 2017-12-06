@@ -23,7 +23,8 @@
 import Foundation
 import UIKit
 
-@objc public class DialogManager: NSObject {
+@objcMembers
+public class DialogManager: NSObject {
 
     static let REQUEST_DIALOG_ACTION:Notification.Name = Notification.Name(rawValue:"REQUEST_DIALOG_ACTION")
     static let REQUEST_DIALOG_PAUSE:Notification.Name = Notification.Name(rawValue:"REQUEST_DIALOG_PAUSE")

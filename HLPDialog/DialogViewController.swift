@@ -47,6 +47,7 @@ protocol ControlViewDelegate: class {
     func actionPerformedByVoiceOver()
 }
 
+@objcMembers
 public class DialogViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, LocalContextDelegate, ControlViewDelegate, DialogViewDelegate {
     deinit {
         let notificationCenter = NotificationCenter.default

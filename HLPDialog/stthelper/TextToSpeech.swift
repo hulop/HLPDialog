@@ -22,7 +22,8 @@
 
 import Foundation
 
-@objc public protocol TTSProtocol {
+@objc
+public protocol TTSProtocol {
     func speak(_ text:String?, callback: @escaping ()->Void)
     func stop()
     func stop(_ immediate: Bool)

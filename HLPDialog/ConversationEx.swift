@@ -66,7 +66,7 @@ public struct MessageResponse: JSONDecodable {// copied from original to keep co
     }
 }
 
-
+@objcMembers
 open class ConversationEx {
 
     fileprivate let domain = "hulop.navcog.ConversationV1"

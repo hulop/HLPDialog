@@ -23,6 +23,7 @@
 import Foundation
 import UIKit
 
+@objcMembers
 public class CustomLeftTableViewCell: UITableViewCell
 {
     var icon: UIImageView = UIImageView()
@@ -157,6 +158,7 @@ public class CustomLeftTableViewCell: UITableViewCell
     }
 }
 
+@objcMembers
 public class CustomLeftTableViewCellSpeaking : CustomLeftTableViewCell{
     var textbuff:String?
     var timer:Timer?
@@ -188,6 +190,7 @@ public class CustomLeftTableViewCellSpeaking : CustomLeftTableViewCell{
         }), selector: #selector(Operation.main), userInfo:nil, repeats:true)
     }
 }
+@objcMembers
 public class CustomRightTableViewCell : CustomLeftTableViewCell{
     override func initstyle() {
         self.arrow =  CustomRightArrow()

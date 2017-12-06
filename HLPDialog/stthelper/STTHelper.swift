@@ -25,7 +25,7 @@ import UIKit
 import AVFoundation
 import Speech
 
-
+@objcMembers
 open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SFSpeechRecognizerDelegate {
     
     fileprivate let speechRecognizer = SFSpeechRecognizer()!
@@ -124,14 +124,15 @@ open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SF
         if nil == self.pwCaptureSession{
             self.pwCaptureSession = AVCaptureSession()
             if let captureSession = self.pwCaptureSession{
-                let microphoneDevice = AVCaptureDevice.default(for: .audio)
-                let microphoneInput = try? AVCaptureDeviceInput(device: microphoneDevice!)
-                if(captureSession.canAddInput(microphoneInput!)){
-                    captureSession.addInput(microphoneInput!)
-                    let adOutput = AVCaptureAudioDataOutput()
-                    adOutput.setSampleBufferDelegate(self, queue: self.audioDataQueue)
-                    if captureSession.canAddOutput(adOutput){
-                        captureSession.addOutput(adOutput)
+                if let microphoneDevice = AVCaptureDevice.default(for: .audio) {
+                    let microphoneInput = try? AVCaptureDeviceInput(device: microphoneDevice)
+                    if(captureSession.canAddInput(microphoneInput!)){
+                        captureSession.addInput(microphoneInput!)
+                        let adOutput = AVCaptureAudioDataOutput()
+                        adOutput.setSampleBufferDelegate(self, queue: self.audioDataQueue)
+                        if captureSession.canAddOutput(adOutput){
+                            captureSession.addOutput(adOutput)
+                        }
                     }
                 }
             }
