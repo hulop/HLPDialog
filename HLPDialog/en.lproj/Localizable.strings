@@ -51,3 +51,5 @@ Speech Recognition　→　NavCog";
 
 "unknownError0" = "Voice recognition could not be started. Please try again.";
 "unknownError1" = "Voice recognition is not available. Please try again later.";
+
+"serverConnectionError" = "Could not connect to the server temporarily.";

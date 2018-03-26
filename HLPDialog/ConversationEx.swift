@@ -166,7 +166,7 @@ open class ConversationEx {
                 
                 let domain = "swift.conversationex"
                 let code = -1
-                let message = e.localizedDescription
+                let message = NSLocalizedString("serverConnectionError", tableName: nil, bundle: Bundle(for: type(of: self)), value: "", comment:"")
                 let userInfo = [NSLocalizedDescriptionKey:message]
                 failure?(NSError(domain:domain, code: code, userInfo:userInfo))
             }
