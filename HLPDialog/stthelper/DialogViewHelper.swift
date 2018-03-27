@@ -431,7 +431,7 @@ public class DialogViewHelper: NSObject {
         micback.opacity = 0
         mic.opacity = 0
         mic.contents = micimgw
-        indicatorCenter.size = 23
+        indicatorCenter.size = IconSmallSize
         micback.size = IconSize
         circle.color = subColor
         micback.color = mainColor
@@ -583,8 +583,7 @@ public class DialogViewHelper: NSObject {
         indicatorRight.opacity = 0
         micback.opacity = 0
         mic.opacity = 0
-        mic.contents = micimgw
-        indicatorCenter.size = 23
+        indicatorCenter.size = IconSmallSize
         micback.size = IconSize
         circle.color = subColor
         micback.color = backgroundColor
