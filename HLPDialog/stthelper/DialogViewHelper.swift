@@ -564,7 +564,10 @@ public class DialogViewHelper: NSObject {
         indicatorCenter.size = IconSmallSize;
         indicatorLeft.size = IconSmallSize;
         indicatorRight.size = IconSmallSize;
-
+        indicatorCenter.setNeedsDisplay()
+        indicatorLeft.setNeedsDisplay()
+        indicatorRight.setNeedsDisplay()
+        
         let pulse = AnimLayer.pulse(1/4.0, size: IconSmallSize, scale:1.03)
         pulse.repeatCount = 1000
         
