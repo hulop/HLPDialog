@@ -446,7 +446,7 @@ public class DialogViewHelper: NSObject {
         micback.add(a3, forKey: "dissolve")
         mic.add(a3, forKey: "dissolve")
         
-        Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(listenAnim), userInfo: nil, repeats: false)
+//        Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(listenAnim), userInfo: nil, repeats: false)
     }
     
     @objc fileprivate func listenAnim() {
