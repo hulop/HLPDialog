@@ -513,7 +513,7 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
                         let nor = weakself.tableView!.numberOfRows(inSection: nos-1)
                         if nor > 0{
                             let lastPath:IndexPath = IndexPath(row:nor-1, section:nos-1)
-                            weakself.tableView!.scrollToRow( at: lastPath , at: .bottom, animated: true)
+                            weakself.tableView!.scrollToRow( at: lastPath , at: .bottom, animated: false)
                         }
                     })
                 }
