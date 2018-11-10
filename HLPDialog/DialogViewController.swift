@@ -167,7 +167,7 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: setting, style: UIAlertActionStyle.default, handler: { (action) in
-            let url = URL(string:"App-Prefs:root=Privacy")
+            let url = URL(string:UIApplicationOpenSettingsURLString)
             UIApplication.shared.open(url!, options:[:], completionHandler: { (success) in
             })
         }))
@@ -194,7 +194,7 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
 
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: setting, style: UIAlertActionStyle.default, handler: { (action) in
-            let url = URL(string:"App-Prefs:root=Privacy")
+            let url = URL(string:UIApplicationOpenSettingsURLString)
             UIApplication.shared.open(url!, options:[:], completionHandler: { (success) in
             })
         }))
