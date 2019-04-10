@@ -85,7 +85,7 @@ public class DialogManager: NSObject {
         }
     }
 
-    public func changeBuilding (_ building:String) {
+    public func changeBuilding (_ building:String?) {
         self.building = building
     }
     
