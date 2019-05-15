@@ -95,12 +95,12 @@ public class DialogManager: NSObject {
             if let longitude = longitude {
                 context["longitude"] = longitude
             }
-            if let floor = floor {
-                context["floor"] = floor
-            }
-            if let building = building {
-                context["building"] = building
-            }
+        }
+        if let floor = floor {
+            context["floor"] = floor
+        }
+        if let building = building {
+            context["building"] = building
         }
         context["user_mode"] = userMode
     }
