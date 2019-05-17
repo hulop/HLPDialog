@@ -59,13 +59,13 @@ public class CustomLeftTableViewCell: UITableViewCell
     required public init(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder)!
-        self.selectionStyle = UITableViewCellSelectionStyle.none
+        self.selectionStyle = UITableViewCell.SelectionStyle.none
         self.initstyle()
     }
-    public override init(style: UITableViewCellStyle, reuseIdentifier: String?)
+    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?)
     {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.selectionStyle = UITableViewCellSelectionStyle.none
+        self.selectionStyle = UITableViewCell.SelectionStyle.none
         
         self.initstyle()
 

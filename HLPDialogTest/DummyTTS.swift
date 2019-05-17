@@ -25,7 +25,11 @@ import HLPDialog
 
 class DummyTTS: TTSProtocol {
     func speak(_ text:String?, callback: @escaping ()->Void) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        guard let text = text else {
+            return callback()
+        }
+        let c = DispatchTimeInterval.milliseconds(Int(text.count * 100))
+        DispatchQueue.main.asyncAfter(deadline: .now() + c) {
             callback()
         }
     }

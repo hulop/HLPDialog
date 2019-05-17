@@ -165,13 +165,13 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
         let setting = NSLocalizedString("SETTING", tableName: nil, bundle: bundle, value: "", comment:"");
         let cancel = NSLocalizedString("CANCEL", tableName: nil, bundle: bundle, value: "", comment:"");
         
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: setting, style: UIAlertActionStyle.default, handler: { (action) in
-            let url = URL(string:UIApplicationOpenSettingsURLString)
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: setting, style: UIAlertAction.Style.default, handler: { (action) in
+            let url = URL(string:UIApplication.openSettingsURLString)
             UIApplication.shared.open(url!, options:[:], completionHandler: { (success) in
             })
         }))
-        alert.addAction(UIAlertAction(title: cancel, style: UIAlertActionStyle.default, handler: { (action) in
+        alert.addAction(UIAlertAction(title: cancel, style: UIAlertAction.Style.default, handler: { (action) in
         }))
         DispatchQueue.main.async(execute: {
             self.present(alert, animated: true, completion: {
@@ -192,13 +192,13 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
         let setting = NSLocalizedString("SETTING", tableName: nil, bundle: bundle, value: "", comment:"");
         let cancel = NSLocalizedString("CANCEL", tableName: nil, bundle: bundle, value: "", comment:"");
 
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: setting, style: UIAlertActionStyle.default, handler: { (action) in
-            let url = URL(string:UIApplicationOpenSettingsURLString)
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: setting, style: UIAlertAction.Style.default, handler: { (action) in
+            let url = URL(string:UIApplication.openSettingsURLString)
             UIApplication.shared.open(url!, options:[:], completionHandler: { (success) in
             })
         }))
-        alert.addAction(UIAlertAction(title: cancel, style: UIAlertActionStyle.default, handler: { (action) in
+        alert.addAction(UIAlertAction(title: cancel, style: UIAlertAction.Style.default, handler: { (action) in
         }))
         DispatchQueue.main.async(execute: {
             self.present(alert, animated: true, completion: { 
@@ -331,7 +331,7 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
         override var accessibilityTraits: UIAccessibilityTraits {
             set {}
             get {
-                return UIAccessibilityTraitButton
+                return UIAccessibilityTraits.button
             }
         }
         override func accessibilityElementDidBecomeFocused() {
@@ -401,7 +401,7 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
             stt.restartRecognize()
             stt.delegate?.showText(NSLocalizedString("SPEAK_NOW", tableName: nil, bundle: Bundle(for: type(of: self)), value: "", comment:"Speak Now!"));
             stt.delegate?.listen()
-            UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, self.navigationItem.leftBarButtonItem)
+            UIAccessibility.post(notification: UIAccessibility.Notification.screenChanged, argument: self.navigationItem.leftBarButtonItem)
         }
     }
     

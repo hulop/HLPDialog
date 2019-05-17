@@ -195,7 +195,7 @@ open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SF
         
         let audioSession:AVAudioSession = AVAudioSession.sharedInstance()
         do {
-            try audioSession.setCategory(AVAudioSessionCategoryRecord)
+            try audioSession.setCategory(AVAudioSession.Category.record)
             try audioSession.setActive(true)
         } catch {
         }
@@ -262,24 +262,27 @@ open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SF
                 return;
             }
             
-            if result == nil {
+            guard let recognitionTask = weakself.recognitionTask else {
                 return;
             }
-    
+            
+            guard recognitionTask.isCancelled == false else {
+                return;
+            }
+            
+            guard let result = result else {
+                return;
+            }
             weakself.stoptimer();
             
-            var millisecDuration:UInt64 = 0;
-            for s in (result?.bestTranscription.segments)! {
-                millisecDuration = millisecDuration + UInt64(s.duration*1000);
-            }
-            weakself.last_text = (result?.bestTranscription.formattedString)!;
+            weakself.last_text = result.bestTranscription.formattedString;
 
             weakself.resulttimer = Timer.scheduledTimer(withTimeInterval: weakself.resulttimerDuration, repeats: false, block: { (timer) in
                 weakself.endRecognize()
             })
             
             let str = weakself.last_text
-            let isFinal:Bool = (result?.isFinal)!;
+            let isFinal:Bool = result.isFinal;
             let length:Int = str.count
             NSLog("Result = \(str), Length = \(length), isFinal = \(isFinal)");
             if (str.count > 0) {
@@ -385,7 +388,7 @@ open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SF
 
         let avs:AVAudioSession = AVAudioSession.sharedInstance()
         do {
-            try avs.setCategory(AVAudioSessionCategorySoloAmbient)
+            try avs.setCategory(AVAudioSession.Category.soloAmbient)
             try avs.setActive(true)
         } catch {
         }
@@ -403,7 +406,7 @@ open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SF
 
         let avs:AVAudioSession = AVAudioSession.sharedInstance()
         do {
-            try avs.setCategory(AVAudioSessionCategorySoloAmbient)
+            try avs.setCategory(AVAudioSession.Category.soloAmbient)
             try avs.setActive(true)
         } catch {
         }

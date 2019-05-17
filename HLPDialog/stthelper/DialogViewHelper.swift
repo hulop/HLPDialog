@@ -74,9 +74,9 @@ public class HelperView: UIView {
     var bTabEnabled:Bool=false  // tap availability
     public var disabled:Bool = false {
         didSet {
-            self.accessibilityTraits = UIAccessibilityTraitButton | UIAccessibilityTraitStaticText
+            self.accessibilityTraits = [.button, .staticText]
             if (disabled) {
-                self.accessibilityTraits = self.accessibilityTraits | UIAccessibilityTraitNotEnabled
+                self.accessibilityTraits.insert(.notEnabled)
                 self.layer.opacity = 0.25
             } else {
                 self.layer.opacity = 1.0
@@ -88,7 +88,7 @@ public class HelperView: UIView {
         super.init(frame: frame)
         self.accessibilityLabel = NSLocalizedString("DialogSearch", tableName:nil, bundle: Bundle(for: type(of: self)), value: "", comment:"")
         self.isAccessibilityElement = true
-        self.accessibilityTraits = UIAccessibilityTraitButton | UIAccessibilityTraitStaticText | UIAccessibilityTraitNotEnabled
+        self.accessibilityTraits = [.button, .staticText, .notEnabled]
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -138,8 +138,8 @@ public class DialogViewHelper: NSObject {
     fileprivate var peakDuration:Float = 0.1// keep peak value for in this interval
     fileprivate var peakTimer:Float = 0
     
-    fileprivate var bScale:Float=1.03       // small indication for mic input
-    fileprivate var bDuration:Float=2.5     // breathing duration
+    fileprivate var bScale:Float=1.05       // small indication for mic input
+    fileprivate var bDuration:Float=1.5     // breathing duration
     
     public var label: UILabel!
     
@@ -171,7 +171,7 @@ public class DialogViewHelper: NSObject {
     
     fileprivate var viewState: DialogViewState {
         didSet {
-            NSLog("\(viewState)")
+            NSLog("viewState:\(viewState)")
         }
     }
     
@@ -375,15 +375,14 @@ public class DialogViewHelper: NSObject {
                 constant: CGFloat(LabelHeight)
             )])
         
-        //self.inactive()
+        self.inactive()
         
         initialized = true
     }
     
-    func setMaxPower(_ p:Float) {
+    public func setMaxPower(_ p:Float) {
         power = p;
     }
-    
     
     // remove all animations
     public func reset() {
@@ -395,6 +394,7 @@ public class DialogViewHelper: NSObject {
             l.removeAllAnimations()
         }
     }
+    
     public func removeFromSuperview(){
         if let ttm = self.textTimer{
             ttm.invalidate()
@@ -425,13 +425,12 @@ public class DialogViewHelper: NSObject {
     fileprivate func listenpopAnim() {
         NSLog("pop anim")
         reset()
-        indicatorCenter.opacity = 1
+        indicatorCenter.opacity = 0
         indicatorLeft.opacity = 0
         indicatorRight.opacity = 0
-        micback.opacity = 0
+        micback.opacity = 1
         mic.opacity = 0
         mic.contents = micimgw
-        indicatorCenter.size = IconSmallSize
         micback.size = IconSize
         circle.color = subColor
         micback.color = mainColor
@@ -439,14 +438,22 @@ public class DialogViewHelper: NSObject {
         micback.setNeedsDisplay()
         
         
-        let a1 = AnimLayer.scale(0.1, current:1, scale:IconSize, type:kCAMediaTimingFunctionLinear)
-        indicatorCenter.add(a1, forKey: "scale")
+        //let a1 = AnimLayer.scale(0.1, current:1, scale:IconSize, type:CAMediaTimingFunctionName.linear)
+        //indicatorCenter.add(a1, forKey: "scale")
         
-        let a3 = AnimLayer.delay(AnimLayer.dissolve(0.1, type:kCAMediaTimingFunctionLinear), second:0.1);
-        micback.add(a3, forKey: "dissolve")
-        mic.add(a3, forKey: "dissolve")
+        let a0 = AnimLayer.dissolve(0, type:CAMediaTimingFunctionName.linear)
+        micback.add(a0, forKey: "dissolve1")
         
-//        Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(listenAnim), userInfo: nil, repeats: false)
+        let a1 = AnimLayer.bounds_size(0.1, from: IconSmallSize / IconSize * micback.bounds.size.width,
+                                       to: micback.bounds.size.width, type:CAMediaTimingFunctionName.linear)
+        let a2 = AnimLayer.pop(0.1, scale: 1.2, x: 0, y: 0, type: CAMediaTimingFunctionName.linear)
+        micback.add(a1, forKey: "scale")
+        micback.add(a2, forKey: "pop")
+        
+        let a3 = AnimLayer.delay(AnimLayer.dissolve(0.1, type:CAMediaTimingFunctionName.linear), second:0.1)
+        mic.add(a3, forKey: "dissolve2")
+        
+        Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(listenAnim), userInfo: nil, repeats: false)
     }
     
     @objc fileprivate func listenAnim() {
@@ -486,7 +493,7 @@ public class DialogViewHelper: NSObject {
         }
         
         indicatorCenter.size = min(CGFloat(p * (maxScaleOfVolumeIndicator - 1.0) + 1.0) * IconSize, IconCircleSize)
-        //NSLog("\(p), \(scale), \(indicatorCenter.size)")
+        //print("\(p), \(scale), \(indicatorCenter.size)")
         self.indicatorCenter.setNeedsDisplay()
     }
     
@@ -509,8 +516,8 @@ public class DialogViewHelper: NSObject {
         circle.setNeedsDisplay()
         micback.setNeedsDisplay()
         
-        let a1 = AnimLayer.dissolveOut(0.2, type: kCAMediaTimingFunctionEaseOut)
-        let a2 = AnimLayer.scale(0.2, current: IconSize, scale: 0.0, type: kCAMediaTimingFunctionEaseOut)
+        let a1 = AnimLayer.dissolveOut(0.2, type: CAMediaTimingFunctionName.easeOut)
+        let a2 = AnimLayer.bounds_size(0.2, from: IconCircleSize*3, to: 0.0, type: CAMediaTimingFunctionName.easeOut)
 
         mic.add(a1, forKey: "shrink")
         micback.add(a1, forKey: "shrink")
@@ -540,8 +547,8 @@ public class DialogViewHelper: NSObject {
         circle.setNeedsDisplay()
         micback.setNeedsDisplay()
         
-        let dissolve = AnimLayer.dissolve(0.2, type: kCAMediaTimingFunctionEaseOut)
-        let scale = AnimLayer.scale(0.2, current: 1, scale: CGFloat(IconSmallSize), type:kCAMediaTimingFunctionLinear)
+        let dissolve = AnimLayer.dissolve(0.2, type: CAMediaTimingFunctionName.easeOut)
+        let scale = AnimLayer.bounds_size(0.2, from: 1, to: IconSmallSize, type:CAMediaTimingFunctionName.linear)
         
         indicatorLeft.add(dissolve, forKey: "speakpop1")
         indicatorLeft.add(scale, forKey: "speakpop2")
@@ -568,7 +575,7 @@ public class DialogViewHelper: NSObject {
         indicatorLeft.setNeedsDisplay()
         indicatorRight.setNeedsDisplay()
         
-        let pulse = AnimLayer.pulse(1/4.0, size: IconSmallSize, scale:1.03)
+        let pulse = AnimLayer.pulse(1/4.0, size: IconSmallSize, scale:CGFloat(bScale))
         pulse.repeatCount = 1000
         
         indicatorLeft.add(pulse, forKey: "speak1")
@@ -577,6 +584,7 @@ public class DialogViewHelper: NSObject {
     }
     
     fileprivate func inactiveAnim() {
+        NSLog("inactive anim")
         reset()
         indicatorCenter.opacity = 0
         indicatorLeft.opacity = 0
@@ -591,7 +599,7 @@ public class DialogViewHelper: NSObject {
         micback.setNeedsDisplay()
         mic.contents = micimgr
         
-        let a1 = AnimLayer.dissolve(0.2, type: kCAMediaTimingFunctionEaseOut)
+        let a1 = AnimLayer.dissolve(0.2, type: CAMediaTimingFunctionName.easeOut)
 
         micback.add(a1, forKey: "inactive")
         mic.add(a1, forKey: "inactive")

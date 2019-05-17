@@ -46,6 +46,7 @@ class AnimLayer: CALayer {
     static let transparent = UIColor(red: 255.0/255.0, green: 255.0/255.0, blue: 255.0/255.0, alpha: 0.0).cgColor
     var color = blue
     var frames:[TimeInterval] = []
+    
     override func draw(in ctx: CGContext) {
         let fs = self.bounds.size.width
         let rect = CGRect(x: (fs-size)/2, y: (fs-size)/2, width: size, height: size)
@@ -54,15 +55,17 @@ class AnimLayer: CALayer {
         ctx.fillPath()
         super.draw(in: ctx)
         
+        /*
         frames.append(Date().timeIntervalSince1970)
         let last = Date().timeIntervalSince1970 - 1
         while(frames[0] < last) {
             frames.removeFirst()
         }
+         */
         //NSLog("\(frames.count) fps")
     }
     override class func needsDisplay(forKey key: String) -> Bool {
-        if key == "size" {
+        if key == "transform.scale" {
             return true
         }
         return super.needsDisplay(forKey: key)
@@ -71,12 +74,12 @@ class AnimLayer: CALayer {
 
     // animation builders
     static func pulse(_ duration:CFTimeInterval, size: CGFloat, scale:CGFloat) -> CAAnimation{
-        let a = CAKeyframeAnimation(keyPath: "size")
+        let a = CAKeyframeAnimation(keyPath: "transform.scale")
         var v:[CGFloat] = []
         var k:[CGFloat] = []
         let N = 30
         for i in 0..<N+1 {
-            v.append(size+size*(scale-1)*sin(CGFloat(i)/CGFloat(N)*CGFloat(Double.pi)*2))
+            v.append((size+size*(scale-1)*sin(CGFloat(i)/CGFloat(N)*CGFloat(Double.pi)*2))/size)
             k.append(CGFloat(i)/CGFloat(N))
         }
         a.values = v
@@ -85,42 +88,42 @@ class AnimLayer: CALayer {
         a.autoreverses = false
         a.isRemovedOnCompletion = false;
         a.repeatCount = 1
-        a.fillMode = kCAFillModeBoth;
-        a.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+        a.fillMode = CAMediaTimingFillMode.both;
+        a.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
         return a
     }
     
-    static func pop(_ duration:CFTimeInterval, scale:CGFloat, x:CGFloat, y:CGFloat, type:String) -> CABasicAnimation{
+    static func pop(_ duration:CFTimeInterval, scale:CGFloat, x:CGFloat, y:CGFloat, type:CAMediaTimingFunctionName) -> CABasicAnimation{
         let a = CABasicAnimation(keyPath: "transform")
         a.duration = duration/2;
         var tr = CATransform3DIdentity;
-        a.fromValue = NSValue(caTransform3D: tr)
+        a.fromValue = tr
         tr = CATransform3DTranslate(tr, x, y, 0);
         tr = CATransform3DScale(tr, scale, scale, 1);
         tr = CATransform3DTranslate(tr, -x, -y, 0);
-        a.toValue = NSValue(caTransform3D: tr)
+        a.toValue = tr
         a.repeatCount = 1
         a.autoreverses = true
         a.isRemovedOnCompletion = false;
-        a.fillMode = kCAFillModeBoth;
+        a.fillMode = CAMediaTimingFillMode.both;
         a.timingFunction = CAMediaTimingFunction(name: type)
         return a
     }
     
-    static func scale(_ duration:CFTimeInterval, current: CGFloat, scale:CGFloat, type:String) -> CABasicAnimation{
-        let a = CABasicAnimation(keyPath: "size")
+    static func bounds_size(_ duration:CFTimeInterval, from: CGFloat, to:CGFloat, type:CAMediaTimingFunctionName) -> CABasicAnimation{
+        let a = CABasicAnimation(keyPath: "bounds.size")
         a.duration = duration
-        a.fromValue = current
-        a.toValue = current * scale
+        a.fromValue = CGSize(width: from, height: from)
+        a.toValue = CGSize(width: to, height: to)
         a.repeatCount = 1
         a.autoreverses = false
         a.isRemovedOnCompletion = false;
-        a.fillMode = kCAFillModeBoth;
+        a.fillMode = CAMediaTimingFillMode.both
         a.timingFunction = CAMediaTimingFunction(name: type)
         return a
     }
     
-    static func dissolve(_ duration:CFTimeInterval, type:String) -> CABasicAnimation{
+    static func dissolve(_ duration:CFTimeInterval, type:CAMediaTimingFunctionName) -> CABasicAnimation{
         let a = CABasicAnimation(keyPath: "opacity")
         a.duration = duration
         a.fromValue = 0
@@ -128,12 +131,12 @@ class AnimLayer: CALayer {
         a.repeatCount = 1
         a.autoreverses = false
         a.isRemovedOnCompletion = false;
-        a.fillMode = kCAFillModeBoth;
+        a.fillMode = CAMediaTimingFillMode.both;
         a.timingFunction = CAMediaTimingFunction(name: type)
         return a
     }
     
-    static func dissolveOut(_ duration:CFTimeInterval, type:String) -> CABasicAnimation{
+    static func dissolveOut(_ duration:CFTimeInterval, type:CAMediaTimingFunctionName) -> CABasicAnimation{
         let a = CABasicAnimation(keyPath: "opacity")
         a.duration = duration
         a.fromValue = 1
@@ -141,7 +144,7 @@ class AnimLayer: CALayer {
         a.repeatCount = 1
         a.autoreverses = false
         a.isRemovedOnCompletion = false;
-        a.fillMode = kCAFillModeBoth;
+        a.fillMode = CAMediaTimingFillMode.both;
         a.timingFunction = CAMediaTimingFunction(name: type)
         return a
     }
@@ -154,7 +157,7 @@ class AnimLayer: CALayer {
         a.toValue = 0
         a.autoreverses = true
         a.isRemovedOnCompletion = false
-        a.fillMode = kCAFillModeBoth
+        a.fillMode = CAMediaTimingFillMode.both
         return a
     }
     

@@ -44,8 +44,8 @@ class ViewController: UIViewController, DialogViewDelegate {
         let x = size+8
         let y = self.view.bounds.size.height - (size+8) 
         if let dh = dialogHelper {
-            dh.subColor = UIColor.black.cgColor
-            dh.mainColor = UIColor.green.cgColor
+            //dh.subColor = UIColor.black.cgColor
+            //dh.mainColor = UIColor.green.cgColor
             dh.scale = scale
             dh.inactive()
             dh.setup(self.view, position:CGPoint(x: x, y: y))
@@ -53,31 +53,36 @@ class ViewController: UIViewController, DialogViewDelegate {
             self.updateView()
         }
         var count = 0
-        Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { (timer) in
-            if let dh = self.dialogHelper{
-                switch(count) {
-                case 0:
-                    dh.inactive()
-                    break
-                case 1:
-                    dh.speak()
-                    break
-                case 2:
-                    dh.listen()
-                    break
-                case 3:
-                    dh.recognize()
-                    break
-                case 4:
-                    dh.reset()
-                    break
-                default:
-                    break
-                }
-            }
-            count = (count+1)%5
+    }
+
+    @IBAction func goInactive(_ sender: UIButton) {
+        if let dh = self.dialogHelper{
+            dh.inactive()
         }
-        
+    }
+    
+    @IBAction func goSpeak(_ sender: UIButton) {
+        if let dh = self.dialogHelper{
+            dh.speak()
+        }
+    }
+    
+    @IBAction func goListen(_ sender: UIButton) {
+        if let dh = self.dialogHelper{
+            dh.listen()
+        }
+    }
+    
+    @IBAction func goRecognize(_ sender: UIButton) {
+        if let dh = self.dialogHelper{
+            dh.recognize()
+        }
+    }
+    
+    @IBAction func goReset(_ sender: UIButton) {
+        if let dh = self.dialogHelper{
+            dh.reset()
+        }
     }
     
     func updateView() {
