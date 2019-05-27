@@ -17,13 +17,13 @@
 		7EDAFE771F29DB5300368058 /* HLPDialog.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD957C1F21D5DE00A00D5D /* HLPDialog.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7EDAFE7C1F29E0DA00368058 /* DummyTTS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDAFE7B1F29E0DA00368058 /* DummyTTS.swift */; };
 		7EDAFE7F1F29E63100368058 /* Speech.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD95911F21DD0C00A00D5D /* Speech.framework */; };
-		7EDAFE801F29E64B00368058 /* ConversationV1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD958B1F21DBFF00A00D5D /* ConversationV1.framework */; };
-		7EDAFE811F29E64B00368058 /* ConversationV1.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD958B1F21DBFF00A00D5D /* ConversationV1.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7EDAFE821F29E65500368058 /* RestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD95891F21DBE100A00D5D /* RestKit.framework */; };
 		7EDAFE831F29E65500368058 /* RestKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD95891F21DBE100A00D5D /* RestKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A9791D8E1F90A7FB00631165 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9791D8D1F90A7FB00631165 /* AVFoundation.framework */; };
+		A9C39A2921BA247200EF5F5D /* AssistantV1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9C39A2821BA247200EF5F5D /* AssistantV1.framework */; };
+		A9C39A2A21BA256A00EF5F5D /* AssistantV1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9C39A2821BA247200EF5F5D /* AssistantV1.framework */; };
+		A9C39A2D21BA2FBA00EF5F5D /* AssistantV1.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9C39A2821BA247200EF5F5D /* AssistantV1.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A9CD958A1F21DBE100A00D5D /* RestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD95891F21DBE100A00D5D /* RestKit.framework */; };
-		A9CD958C1F21DBFF00A00D5D /* ConversationV1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD958B1F21DBFF00A00D5D /* ConversationV1.framework */; };
 		A9CD958E1F21DCFA00A00D5D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD958D1F21DCFA00A00D5D /* Foundation.framework */; };
 		A9CD95901F21DD0200A00D5D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD958F1F21DD0200A00D5D /* UIKit.framework */; };
 		A9CD95921F21DD0C00A00D5D /* Speech.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD95911F21DD0C00A00D5D /* Speech.framework */; };
@@ -57,7 +57,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				7EDAFE811F29E64B00368058 /* ConversationV1.framework in Embed Frameworks */,
+				A9C39A2D21BA2FBA00EF5F5D /* AssistantV1.framework in Embed Frameworks */,
 				7EDAFE771F29DB5300368058 /* HLPDialog.framework in Embed Frameworks */,
 				7EDAFE831F29E65500368058 /* RestKit.framework in Embed Frameworks */,
 			);
@@ -77,10 +77,10 @@
 		7EDAFE721F29DB4400368058 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7EDAFE7B1F29E0DA00368058 /* DummyTTS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DummyTTS.swift; sourceTree = "<group>"; };
 		A9791D8D1F90A7FB00631165 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		A9C39A2821BA247200EF5F5D /* AssistantV1.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssistantV1.framework; path = Carthage/Build/iOS/AssistantV1.framework; sourceTree = "<group>"; };
 		A9CD957C1F21D5DE00A00D5D /* HLPDialog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HLPDialog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9CD95801F21D5DE00A00D5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9CD95891F21DBE100A00D5D /* RestKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RestKit.framework; path = Carthage/Build/iOS/RestKit.framework; sourceTree = "<group>"; };
-		A9CD958B1F21DBFF00A00D5D /* ConversationV1.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ConversationV1.framework; path = Carthage/Build/iOS/ConversationV1.framework; sourceTree = "<group>"; };
 		A9CD958D1F21DCFA00A00D5D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A9CD958F1F21DD0200A00D5D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A9CD95911F21DD0C00A00D5D /* Speech.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Speech.framework; path = System/Library/Frameworks/Speech.framework; sourceTree = SDKROOT; };
@@ -103,9 +103,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9C39A2A21BA256A00EF5F5D /* AssistantV1.framework in Frameworks */,
 				7EDAFE761F29DB5300368058 /* HLPDialog.framework in Frameworks */,
 				7EDAFE7F1F29E63100368058 /* Speech.framework in Frameworks */,
-				7EDAFE801F29E64B00368058 /* ConversationV1.framework in Frameworks */,
 				7EDAFE821F29E65500368058 /* RestKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -114,8 +114,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9C39A2921BA247200EF5F5D /* AssistantV1.framework in Frameworks */,
 				A9791D8E1F90A7FB00631165 /* AVFoundation.framework in Frameworks */,
-				A9CD958C1F21DBFF00A00D5D /* ConversationV1.framework in Frameworks */,
 				A9CD958E1F21DCFA00A00D5D /* Foundation.framework in Frameworks */,
 				A9CD958A1F21DBE100A00D5D /* RestKit.framework in Frameworks */,
 				A9CD95921F21DD0C00A00D5D /* Speech.framework in Frameworks */,
@@ -178,7 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				A9791D8D1F90A7FB00631165 /* AVFoundation.framework */,
-				A9CD958B1F21DBFF00A00D5D /* ConversationV1.framework */,
+				A9C39A2821BA247200EF5F5D /* AssistantV1.framework */,
 				A9CD958D1F21DCFA00A00D5D /* Foundation.framework */,
 				A9CD95891F21DBE100A00D5D /* RestKit.framework */,
 				A9CD95911F21DD0C00A00D5D /* Speech.framework */,
@@ -266,17 +266,17 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = HULOP;
 				TargetAttributes = {
 					7EDAFE631F29DB4400368058 = {
 						CreatedOnToolsVersion = 8.3.3;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Manual;
 					};
 					A9CD957B1F21D5DE00A00D5D = {
 						CreatedOnToolsVersion = 8.3.3;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Manual;
 					};
 				};
@@ -332,14 +332,14 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/ConversationV1.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/AssistantV1.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RestKit.framework",
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -469,6 +469,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -476,6 +477,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -530,6 +532,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -537,6 +540,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -575,6 +579,7 @@
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -605,6 +610,7 @@
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;

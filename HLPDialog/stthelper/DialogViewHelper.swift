@@ -246,7 +246,7 @@ public class DialogViewHelper: NSObject {
         view.addSubview(helperView)
         view.addConstraints([
             NSLayoutConstraint(
-                item: helperView,
+                item: helperView as Any,
                 attribute: .centerX,
                 relatedBy: .equal,
                 toItem: view,
@@ -255,7 +255,7 @@ public class DialogViewHelper: NSObject {
                 constant: position.x
             ),
             NSLayoutConstraint(
-                item: helperView,
+                item: helperView as Any,
                 attribute: .centerY,
                 relatedBy: .equal,
                 toItem: view,
@@ -264,7 +264,7 @@ public class DialogViewHelper: NSObject {
                 constant: position.y
             ),
             NSLayoutConstraint(
-                item: helperView,
+                item: helperView as Any,
                 attribute: .width,
                 relatedBy: .equal,
                 toItem: nil,
@@ -273,7 +273,7 @@ public class DialogViewHelper: NSObject {
                 constant: ViewSize
             ),
             NSLayoutConstraint(
-                item: helperView,
+                item: helperView as Any,
                 attribute: .height,
                 relatedBy: .equal,
                 toItem: nil,
@@ -339,7 +339,7 @@ public class DialogViewHelper: NSObject {
         
         view.addConstraints([
             NSLayoutConstraint(
-                item: label,
+                item: label as Any,
                 attribute: .centerX,
                 relatedBy: .equal,
                 toItem: view,
@@ -348,7 +348,7 @@ public class DialogViewHelper: NSObject {
                 constant: 0
             ),
             NSLayoutConstraint(
-                item: label,
+                item: label as Any,
                 attribute: .centerY,
                 relatedBy: .equal,
                 toItem: view,
@@ -357,7 +357,7 @@ public class DialogViewHelper: NSObject {
                 constant: CGFloat(-LabelHeight)
             ),
             NSLayoutConstraint(
-                item: label,
+                item: label as Any,
                 attribute: .width,
                 relatedBy: .equal,
                 toItem: view,
@@ -366,7 +366,7 @@ public class DialogViewHelper: NSObject {
                 constant: 0
             ),
             NSLayoutConstraint(
-                item: label,
+                item: label as Any,
                 attribute: .height,
                 relatedBy: .equal,
                 toItem: nil,

@@ -23,6 +23,7 @@
 import UIKit
 import Foundation
 import Speech
+import RestKit
 
 @objc
 public protocol LocalContextDelegate{
@@ -33,8 +34,8 @@ public protocol LocalContextDelegate{
 
 @objcMembers
 open class LocalContext: NSObject{
-    fileprivate var context:[String:Any] = [:]
-    fileprivate var localvariables:[String:Any] = [:]
+    fileprivate var context:[String:JSON] = [:]
+    fileprivate var localvariables:[String:JSON] = [:]
     fileprivate static var no_welcome = false
 
     public var delegate:LocalContextDelegate?
@@ -43,11 +44,11 @@ open class LocalContext: NSObject{
     }
     
     open func verifyPrivacy() {
-        self.verifyAudioAccess();
+        self.verifyAudioAccess()
     }
     
     fileprivate func verifyAudioAccess() {
-        AVCaptureDevice.requestAccess(for: AVMediaType.audio, completionHandler: {(granted: Bool) in
+        AVCaptureDevice.requestAccess(for: .audio, completionHandler: {(granted: Bool) in
             if granted {
                 self.verifySpeechRecoAccess()
             } else {
@@ -70,10 +71,10 @@ open class LocalContext: NSObject{
         LocalContext.no_welcome = true
     }
     
-    open func getContext() -> [String: Any]{
-        self.context["local"] = self.localvariables
+    open func getContext() -> [String: JSON]{
+        self.context["local"] = JSON.object(self.localvariables)
         if LocalContext.no_welcome {
-            self.context["no_welcome"] = true
+            self.context["no_welcome"] = JSON.boolean(true)
         }
         DialogManager.sharedManager().setLocationContext(&self.context)
         return self.context
@@ -81,7 +82,7 @@ open class LocalContext: NSObject{
     
     fileprivate func notify_delegate_as_needed(){
         if let del = self.delegate{
-            del.onContextChange(self);
+            del.onContextChange(self)
         }
     }
     

@@ -21,155 +21,117 @@
  *******************************************************************************/
 
 import Foundation
-import ConversationV1
 import RestKit
-
-public struct MessageResponse: JSONDecodable {// copied from original to keep consistency
-    
-    /// The raw JSON object used to construct this model.
-    public let json: [String: Any]
-    
-    /// The user input from the request.
-    public let input: Input?
-    
-    /// Whether to return more than one intent.
-    /// Included in the response only when sent with the request.
-    public let alternateIntents: Bool?
-    
-    /// Information about the state of the conversation.
-    public let context: [String: Any]
-    
-    /// An array of terms from the request that were identified as entities.
-    /// The array is empty if no entities were identified.
-    public let entities: [Entity]
-    
-    /// An array of terms from the request that were identified as intents. Each intent has an
-    /// associated confidence. The list is sorted in descending order of confidence. If there are
-    /// 10 or fewer intents then the sum of the confidence values is 100%. The array is empty if
-    /// no intents were identified.
-    public let intents: [Intent]
-    
-    /// An output object that includes the response to the user,
-    /// the nodes that were hit, and messages from the log.
-    public let output: Output
-    
-    /// Used internally to initialize a `MessageResponse` model from JSON.
-    public init(json: JSON) throws {
-        self.json = try json.getDictionaryObject()
-        input = try? json.decode(at: "input")
-        alternateIntents = try? json.getBool(at: "alternate_intents")
-        let cdata:Context = try json.decode(at: "context")
-        context = cdata.json
-        entities = try json.decodedArray(at: "entities", type: Entity.self)
-        intents = try json.decodedArray(at: "intents",  type: Intent.self)
-        output = try json.decode(at: "output")
-    }
-}
+import AssistantV1
 
 @objcMembers
 open class ConversationEx {
 
     fileprivate let domain = "hulop.navcog.ConversationV1"
     static var running = false
-    fileprivate func dataToError(_ data: Data) -> NSError? {
-        do {
-            let json = try JSON(data: data)
-            let error = try json.getString(at: "error")
-            let code = (try? json.getInt(at: "code")) ?? 400
-            let userInfo = [NSLocalizedFailureReasonErrorKey: error]
-            return NSError(domain: domain, code: code, userInfo: userInfo)
-        } catch {
-            return nil
-        }
-    }
-    
+
+    private let session = URLSession(configuration: .default)
+
     public init() {
     }
-    
-    /**
-     Start a new conversation or get a response to a user's input.
 
-     - parameter text: The user's input message.
-     - parameter failure: A function executed if an error occurs.
-     - parameter success: A function executed with the conversation service's response.
-     */
-    open func message(
+    func errorResponseDecoder(data: Data, response: HTTPURLResponse) -> RestError {
+
+        let statusCode = response.statusCode
+        var errorMessage: String?
+        var metadata = [String: Any]()
+
+        do {
+            let json = try JSONDecoder().decode([String: JSON].self, from: data)
+            metadata = [:]
+            if case let .some(.string(message)) = json["error"] {
+                errorMessage = message
+            }
+            // If metadata is empty, it should show up as nil in the RestError
+            return RestError.http(statusCode: statusCode, message: errorMessage, metadata: !metadata.isEmpty ? metadata : nil)
+        } catch {
+            return RestError.http(statusCode: statusCode, message: nil, metadata: nil)
+        }
+    }
+
+    public func message(
         _ text: String? = nil,
         server: String,
         api_key: String,
         client_id: String? = nil,
-        context: [String: Any]? = nil,
-        failure: ((Error) -> Void)? = nil,
-        success: @escaping (MessageResponse) -> Void)
+        context: Context? = nil,
+        completionHandler: @escaping (RestResponse<MessageResponse>?, Error?) -> Void)
     {
         if ConversationEx.running {
             return
         }
+
+        // construct body
+        let messageRequest = MessageRequest(
+            input: InputData(text: text ?? ""),
+            context: context)
+        guard let body = try? JSONEncoder().encodeIfPresent(messageRequest) else {
+            let failureReason = "context could not be serialized to JSON."
+            let userInfo = [NSLocalizedFailureReasonErrorKey: failureReason]
+            let error = NSError(domain: domain, code: 0, userInfo: userInfo)
+            completionHandler(nil, error)
+            return
+        }
+
+        // construct header parameters
+        var headerParameters = [String: String]()
+        headerParameters["Accept"] = "application/json"
+        headerParameters["Content-Type"] = "application/json"
+        //headerParameters["User-Agent"] = "NavCogDialog"
+
         // construct query parameters
         var queryParameters = [URLQueryItem]()
         queryParameters.append(URLQueryItem(name: "lang", value: (Locale.current as NSLocale).languageCode))
-        queryParameters.append(URLQueryItem(name: "api_key", value: api_key))
         if text != nil {
             queryParameters.append(URLQueryItem(name: "text", value: text))
         }
         if client_id != nil {
             queryParameters.append(URLQueryItem(name: "id", value: client_id))
         }
-        var json = [String: Any]()
-        if let context = context {
-            let njsdata = try! JSONSerialization.data(withJSONObject: context, options: [])
-            json["context"] = try! JSONSerialization.jsonObject(with: njsdata, options: [])
-        }
-        guard let body = try? JSON(dictionary: json).serialize() else {
-            let failureReason = "context could not be serialized to JSON."
-            let userInfo = [NSLocalizedFailureReasonErrorKey: failureReason]
-            let error = NSError(domain: domain, code: 0, userInfo: userInfo)
-            failure?(error)
-            return
-        }
-        
-        let https = DialogManager.sharedManager().useHttps ? "https" : "http"
 
         // construct REST request
+        let authMethod = APIKeyAuthentication(name: "api_key", key: api_key, location: .query)
+        let https = DialogManager.sharedManager().useHttps ? "https" : "http"
+        let url = https + "://" + server + "/service"
         let request = RestRequest(
+            session: session,
+            authMethod: authMethod,
+            errorResponseDecoder: errorResponseDecoder,
             method: "POST",
-            url: https + "://" + server + "/service",
-            //userAgent: "NavCogDialog",
-            credentials: Credentials.apiKey,
-            headerParameters: [:],
-            acceptType: "application/json",
-            contentType: "application/json",
+            url: url,
+            headerParameters: headerParameters,
             queryItems: queryParameters,
-            messageBody: body)
-
+            messageBody: body
+        )
 
         // execute REST request
         ConversationEx.running = true
-        
-        request.responseData { (response) in
+        request.responseObject { (response: RestResponse<MessageResponse>?, error: RestError?) in
             ConversationEx.running = false
-            do {
-                switch response.result {
-                case .success(let data):
-                    let json = try MessageResponse(json: JSON(data:data))
-                    success(json)
-                    break
-                case .failure(_):
+            if let error = error {
+                print("RestError: ", error.localizedDescription)
+                switch error {
+                case .noResponse:
                     let domain = "swift.conversationex"
                     let code = -1
                     let message = NSLocalizedString("checkNetworkConnection", tableName: nil, bundle: Bundle(for: type(of: self)), value: "", comment:"")
-                    let userInfo = [NSLocalizedDescriptionKey:message]
-                    failure?(NSError(domain:domain, code: code, userInfo:userInfo))
+                    let userInfo = [NSLocalizedDescriptionKey: message]
+                    completionHandler(response, NSError(domain: domain, code: code, userInfo: userInfo))
+                default:
+                    let domain = "swift.conversationex"
+                    let code = -1
+                    let message = NSLocalizedString("serverConnectionError", tableName: nil, bundle: Bundle(for: type(of: self)), value: "", comment:"")
+                    let userInfo = [NSLocalizedDescriptionKey: message]
+                    completionHandler(response, NSError(domain: domain, code: code, userInfo: userInfo))
                 }
-            } catch (let e){
-                print(e)
-                
-                let domain = "swift.conversationex"
-                let code = -1
-                let message = NSLocalizedString("serverConnectionError", tableName: nil, bundle: Bundle(for: type(of: self)), value: "", comment:"")
-                let userInfo = [NSLocalizedDescriptionKey:message]
-                failure?(NSError(domain:domain, code: code, userInfo:userInfo))
+                return
             }
+            completionHandler(response, nil)
         }
     }
 }
