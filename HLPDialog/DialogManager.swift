@@ -101,6 +101,8 @@ public class DialogManager: NSObject {
         }
         if let building = building {
             context["building"] = building
+        } else {
+            context["building"] = ""
         }
         context["user_mode"] = userMode
     }
