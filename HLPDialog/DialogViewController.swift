@@ -22,6 +22,8 @@
 
 import Foundation
 import UIKit
+import RestKit
+import AssistantV1
 
 var standardError = FileHandle.standardError
 
@@ -71,7 +73,7 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
     
     let conv_devicetype:String = UIDevice.current.systemName + "_" + UIDevice.current.systemVersion
     let conv_deviceid:String = (UIDevice.current.identifierForVendor?.uuidString)!
-    var conv_context:[String: Any]? = nil
+    var conv_context:Context? = nil
     var conv_server:String? = nil
     var conv_api_key:String? = nil
     var conv_client_id:String? = nil
@@ -575,8 +577,8 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
 
     var inflight:Timer? = nil
     var agent_name = ""
-    var lastresponse:HLPDialog.MessageResponse? = nil
-    internal func newresponse(_ orgres: HLPDialog.MessageResponse?){
+    var lastresponse:MessageResponse? = nil
+    internal func newresponse(_ orgres: MessageResponse?) {
         conv_context_local.welcome_shown()
         DispatchQueue.main.async(execute: { [weak self] in
             if let weakself = self {
@@ -586,7 +588,7 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
         })
 
         self.removeImageView()
-        var resobj:HLPDialog.MessageResponse? = orgres
+        var resobj:MessageResponse? = orgres
         if resobj == nil{
             resobj = self.lastresponse
         }else{
@@ -599,18 +601,20 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
             return
         }
 
-        guard let system:[String:Any] = cc["system"] as? [String:Any] else {
+        guard let system = cc.system else {
             return
-        }
-        
-        guard let dialog_request_counter:Int = system["dialog_request_counter"] as? Int else {
-            return
-        }
-        if dialog_request_counter > 1 {
-            self.timeoutCount = 0
         }
 
-        if let name:String = cc["agent_name"] as? String {
+        if system.additionalProperties["dialog_request_counter"] == nil {
+            return
+        }
+        if case let JSON.int(dialog_request_counter)? = system.additionalProperties["dialog_request_counter"] {
+            if dialog_request_counter > 1 {
+                self.timeoutCount = 0
+            }
+        }
+
+        if case let JSON.string(name)? = cc.additionalProperties["agent_name"] {
             agent_name = name
         }
         
@@ -618,7 +622,7 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
         self.tableData.append(["name": agent_name, "type": 1,  "image": "conversation.png", "message": restxt])
         self.refreshTableView()
         var postEndDialog:(()->Void)? = nil
-        if let fin:Bool = cc["finish"] as? Bool{
+        if case let JSON.boolean(fin)? = cc.additionalProperties["finish"] {
             if fin {
                 postEndDialog = {
                     self.cancellable = true
@@ -633,24 +637,29 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
                 }
             }
         }
-        if let navi:Bool = cc["navi"] as? Bool{
-            if navi{
-                if let dest_info:[String:Any] = cc["dest_info"] as! [String:Any]? {
-                    if let nodes:String = dest_info["nodes"] as? String {
+        if case let JSON.boolean(navi)? = cc.additionalProperties["navi"] {
+            if navi {
+                if case let JSON.object(dest_info)? = cc.additionalProperties["dest_info"] {
+                    if case let JSON.string(nodes)? = dest_info["nodes"] {
                         var info:[String : Any] = ["toID": nodes]
-                        if let from = dest_info["from"] as? String {
+                        if case let JSON.string(from)? = dest_info["from"] {
                             info["fromID"] = from
                         }
-                        if cc["use_stair"] != nil {
-                            info["use_stair"] = cc["use_stair"] as! Bool;
+                        if cc.additionalProperties["use_stair"] != nil {
+                            if case let JSON.boolean(use_stair)? = cc.additionalProperties["use_stair"] {
+                                info["use_stair"] = use_stair
+                            }
                         }
-                        if cc["use_elevator"] != nil {
-                            info["use_elevator"] = cc["use_elevator"] as! Bool;
+                        if cc.additionalProperties["use_elevator"] != nil {
+                            if case let JSON.boolean(use_elevator)? = cc.additionalProperties["use_elevator"] {
+                                info["use_elevator"] = use_elevator
+                            }
                         }
-                        if cc["use_escalator"] != nil {
-                            info["use_escalator"] = cc["use_escalator"] as! Bool;
+                        if cc.additionalProperties["use_escalator"] != nil {
+                            if case let JSON.boolean(use_escalator)? = cc.additionalProperties["use_escalator"] {
+                                info["use_escalator"] = use_escalator
+                            }
                         }
-                        
                         postEndDialog = { [weak self] in
                             if let weakself = self {
                                 weakself.cancellable = true
@@ -671,7 +680,7 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
             }
         }
         var speech = restxt
-        if let pron:String = cc["output_pron"] as? String {
+        if case let JSON.string(pron)? = cc.additionalProperties["output_pron"] {
             speech = pron
         }
 
@@ -737,36 +746,43 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
 
         let conversation = ConversationEx()
         if var context = self.conv_context {
-            self.conv_context_local.getContext().forEach({ (key: String, value: Any) in
-                context[key] = value
+            self.conv_context_local.getContext().forEach({ (arg) in
+                let (key, value) = arg
+                context.additionalProperties[key] = value
             })
 
-            conversation.message(msg, server: self.conv_server!, api_key: self.conv_api_key!, client_id: self.conv_client_id, context: context, failure: { [weak self] (error:Error) in
+            conversation.message(msg, server: self.conv_server!, api_key: self.conv_api_key!, client_id: self.conv_client_id, context: context) { [weak self] (response, error) in
                 if let weakself = self {
-                    weakself.removeWaiting()
-                    weakself.failureCustom(error)
-                }
-            }) { [weak self] response in
-                if let weakself = self {
-                    let conversationID = response.context["conversation_id"] as! String
-                    if conversationID != weakself.conversation_id{
+                    if let error = error {
+                        weakself.removeWaiting()
+                        weakself.failureCustom(error)
+                        return
+                    }
+                    guard let message = response?.result else {
+                        return
+                    }
+                    let conversationID = response?.result?.context.conversationID
+                    if conversationID != weakself.conversation_id {
                         weakself.conversation_id = conversationID
                         NSLog("conversationid changed: " + weakself.conversation_id!)
                     }
                     weakself.removeWaiting()
-                    weakself.newresponse(response)
+                    weakself.newresponse(message)
                 }
             }
-        }else{
-            conversation.message(msg, server: self.conv_server!, api_key: self.conv_api_key!, client_id: self.conv_client_id, context: self.conv_context_local.getContext(), failure: { [weak self] (error:Error) in
+        } else {
+            let initial_context = Context(conversationID: nil, system: nil, additionalProperties: self.conv_context_local.getContext())
+            conversation.message(msg, server: self.conv_server!, api_key: self.conv_api_key!, client_id: self.conv_client_id, context: initial_context) { [weak self] (response, error) in
                 if let weakself = self {
+                    if let error = error {
+                        weakself.removeWaiting()
+                        weakself.failureCustom(error)
+                    }
+                    guard let message = response?.result else {
+                        return
+                    }
                     weakself.removeWaiting()
-                    weakself.failureCustom(error)
-                }
-            }) {[weak self] response in
-                if let weakself = self {
-                    weakself.removeWaiting()
-                    weakself.newresponse(response)
+                    weakself.newresponse(message)
                 }
             }
         }

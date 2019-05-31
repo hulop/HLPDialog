@@ -52,7 +52,6 @@ class ViewController: UIViewController, DialogViewDelegate {
             dh.delegate = self
             self.updateView()
         }
-        var count = 0
     }
 
     @IBAction func goInactive(_ sender: UIButton) {

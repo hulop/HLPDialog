@@ -22,6 +22,7 @@
 
 import Foundation
 import UIKit
+import RestKit
 
 @objcMembers
 public class DialogManager: NSObject {
@@ -89,22 +90,22 @@ public class DialogManager: NSObject {
         self.building = building
     }
     
-    func setLocationContext(_ context:inout [String: Any]) {
+    func setLocationContext(_ context:inout [String: JSON]) {
         if let latitude = latitude {
-            context["latitude"] = latitude
+            context["latitude"] = JSON.double(latitude)
             if let longitude = longitude {
-                context["longitude"] = longitude
+                context["longitude"] = JSON.double(longitude)
             }
         }
         if let floor = floor {
-            context["floor"] = floor
+            context["floor"] = JSON.int(floor)
         }
         if let building = building {
-            context["building"] = building
+            context["building"] =  JSON.string(building)
         } else {
-            context["building"] = ""
+            context["building"] =  JSON.string("")
         }
-        context["user_mode"] = userMode
+        context["user_mode"] = JSON.string(userMode)
     }
     
     public func action() {
