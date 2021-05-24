@@ -44,27 +44,28 @@ class servicecred{
         self.pass = _pass
     }
 }
-protocol ControlViewDelegate: class {
+
+protocol ControlViewDelegate: AnyObject {
     func elementFocusedByVoiceOver()
     func actionPerformedByVoiceOver()
 }
 
 @objcMembers
-public class DialogViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, LocalContextDelegate, ControlViewDelegate, DialogViewDelegate {
+open class DialogViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, LocalContextDelegate, ControlViewDelegate, DialogViewDelegate {
     deinit {
         let notificationCenter = NotificationCenter.default
         notificationCenter.removeObserver(self)
         DialogManager.sharedManager().isAvailable = true
     }
-    public var tts:TTSProtocol? = nil
-    public var baseHelper:DialogViewHelper? = nil
+    open var tts:TTSProtocol? = nil
+    open var baseHelper:DialogViewHelper? = nil
     
     var imageView: UIImageView? = nil
     var tableView: UITableView? = nil
     var controlView: ControlView? = nil
     var conversation_id:String? = nil
     var client_id:Int? = nil
-    public var root: UIViewController? = nil
+    open var root: UIViewController? = nil
     //let tintColor: UIColor = UIColor(red: 0, green: 0.478431, blue: 1, alpha: 1)
     var isDeveloperMode: Bool = false
 
@@ -90,7 +91,7 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
     var heightLeftCell: CustomLeftTableViewCell = CustomLeftTableViewCell()
     var heightRightCell: CustomRightTableViewCell = CustomRightTableViewCell()
     
-    fileprivate var dialogViewHelper: DialogViewHelper = DialogViewHelper()
+    open var dialogViewHelper: DialogViewHelper = DialogViewHelper()
     var cancellable = false
     
     
@@ -126,7 +127,7 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
         self.initConversationConfig()//override with local setting
         self.conv_context_local.verifyPrivacy()
     }
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         print(Date(), #function, #line)
         self.conv_context_local.delegate = self
@@ -149,6 +150,15 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
     
     override public func viewDidAppear(_ animated: Bool) {
         print(Date(), #function, #line)
+        if !UIAccessibility.isVoiceOverRunning {
+            restartConversation()
+            DialogManager.sharedManager().isActive = true
+        } else {
+            _ = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(start), userInfo: nil, repeats: false)
+        }
+    }
+
+    internal func start() {
         restartConversation()
         DialogManager.sharedManager().isActive = true
     }
@@ -160,7 +170,7 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     public func showNoSpeechRecoAlert() {
-        let bundle = Bundle(for: type(of: self))
+        let bundle = Bundle.module
         
         let title = NSLocalizedString("NoSpeechRecoAccessAlertTitle", tableName: nil, bundle: bundle, value: "", comment:"");
         let message = NSLocalizedString("NoSpeechRecoAccessAlertMessage", tableName: nil, bundle: bundle, value: "", comment:"");
@@ -187,7 +197,7 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     public func showNoAudioAccessAlert(){
-        let bundle = Bundle(for: type(of: self))
+        let bundle = Bundle.module
         
         let title = NSLocalizedString("NoAudioAccessAlertTitle", tableName: nil, bundle: bundle, value: "", comment:"");
         let message = NSLocalizedString("NoAudioAccessAlertMessage", tableName: nil, bundle: bundle, value: "", comment:"");
@@ -257,7 +267,7 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     @objc internal func pauseConversation() {
-        let bundle = Bundle(for: type(of: self))
+        let bundle = Bundle.module
         
         let stt = self.getStt()
         if (stt.recognizing) {
@@ -278,7 +288,7 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
     public func onContextChange(_ context:LocalContext){
         if !self.conv_started{
             self.conv_started = true
-            self.sendmessage("")
+            self.sendMessage("")
         }
     }
     
@@ -321,13 +331,13 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
         override var accessibilityLabel: String? {
             set {}
             get {
-                return NSLocalizedString("DialogStart", tableName: nil, bundle: Bundle(for: type(of: self)), value: "", comment: "")
+                return NSLocalizedString("DialogStart", tableName: nil, bundle: Bundle.module, value: "", comment: "")
             }
         }
         override var accessibilityHint: String? {
             set {}
             get {
-                return NSLocalizedString("DialogStartHint", tableName: nil, bundle: Bundle(for: type(of: self)), value: "", comment: "")
+                return NSLocalizedString("DialogStartHint", tableName: nil, bundle: Bundle.module, value: "", comment: "")
             }
         }
         override var accessibilityTraits: UIAccessibilityTraits {
@@ -393,7 +403,7 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
             self.tts?.playVoiceRecoStart()
         }
         stt.paused = true
-        stt.delegate?.showText(NSLocalizedString("PAUSING", tableName: nil, bundle: Bundle(for: type(of: self)), value: "", comment:"Pausing"));
+        stt.delegate?.showText(NSLocalizedString("PAUSING", tableName: nil, bundle: Bundle.module, value: "", comment:"Pausing"));
         stt.delegate?.inactive()
     }
     func actionPerformedByVoiceOver() {
@@ -401,7 +411,7 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
         if(stt.paused){
             print("restart stt")
             stt.restartRecognize()
-            stt.delegate?.showText(NSLocalizedString("SPEAK_NOW", tableName: nil, bundle: Bundle(for: type(of: self)), value: "", comment:"Speak Now!"));
+            stt.delegate?.showText(NSLocalizedString("SPEAK_NOW", tableName: nil, bundle: Bundle.module, value: "", comment:"Speak Now!"));
             stt.delegate?.listen()
             UIAccessibility.post(notification: UIAccessibility.Notification.screenChanged, argument: self.navigationItem.leftBarButtonItem)
         }
@@ -524,7 +534,7 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     public func dialogViewTapped() {
-        let bundle = Bundle(for: type(of: self))
+        let bundle = Bundle.module
         
         let stt = self.getStt()
         if (stt.recognizing) {
@@ -664,16 +674,37 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
                             if let weakself = self {
                                 weakself.cancellable = true
                                 weakself.updateView()
-                                
+
                                 if weakself.root != nil {
                                     _ = weakself.navigationController?.popToViewController(weakself.root!, animated: true)
                                 } else {
                                     _ = weakself.navigationController?.popToRootViewController(animated: true)
                                 }                                
-                                
+
                                 NotificationCenter.default.post(name: Notification.Name(rawValue:"request_start_navigation"),
                                                                 object: weakself, userInfo: info)
                             }
+                        }
+                    }
+                }
+                if case let JSON.object(find_info)? = cc.additionalProperties["find_info"] {
+                    var info:[String : Any] = [:]
+                    if case let JSON.string(name)? = find_info["name"] {
+                        info["name"] = name
+                    }
+                    postEndDialog = { [weak self] in
+                        if let weakself = self {
+                            weakself.cancellable = true
+                            weakself.updateView()
+
+                            if weakself.root != nil {
+                                _ = weakself.navigationController?.popToViewController(weakself.root!, animated: true)
+                            } else {
+                                _ = weakself.navigationController?.popToRootViewController(animated: true)
+                            }
+
+                            NotificationCenter.default.post(name: Notification.Name(rawValue:"request_find_person"),
+                                                            object: weakself, userInfo: info)
                         }
                     }
                 }
@@ -732,11 +763,18 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
             }
         })
     }
+
+    open func getConversation(pre: Locale) -> HLPConversation{
+        return ConversationEx()
+    }
     
     var sendTimeout:Timer? = nil
     var sendTimeoutCount = 0
     
-    internal func sendmessage(_ msg: String, notimeout: Bool = false){
+    open func sendMessage(_ msg: String, notimeout: Bool = false){
+        if notimeout == false {
+            self.showWaiting()
+        }
         if !msg.isEmpty{
             newmessage(msg)
 
@@ -744,7 +782,9 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
             //NavSound.sharedInstance().playVoiceRecoEnd()
         }
 
-        let conversation = ConversationEx()
+        let pre = Locale(identifier: Locale.preferredLanguages[0])
+
+        let conversation = self.getConversation(pre:pre)//ConversationEx()
         if var context = self.conv_context {
             self.conv_context_local.getContext().forEach({ (arg) in
                 let (key, value) = arg
@@ -784,11 +824,6 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
                     weakself.removeWaiting()
                     weakself.newresponse(message)
                 }
-            }
-        }
-        if notimeout == false {
-            DispatchQueue.main.async {
-                self.showWaiting()
             }
         }
     }
@@ -846,7 +881,7 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
 
         stt.listen([([".*"], {[weak self] (str, dur) in
             if let weakself = self {
-                weakself.sendmessage(str)
+                weakself.sendMessage(str)
             }
         })], selfvoice: response,speakendactions:[({[weak self] str in
             if let weakself = self {
@@ -893,7 +928,7 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
         let stt:STTHelper = self.getStt()
         stt.endRecognize()
         stt.paused = true
-        stt.delegate?.showText(NSLocalizedString("PAUSING", tableName: nil, bundle: Bundle(for: type(of: self)), value: "", comment:"Pausing"));
+        stt.delegate?.showText(NSLocalizedString("PAUSING", tableName: nil, bundle: Bundle.module, value: "", comment:"Pausing"));
         stt.delegate?.inactive()
         stt.delegate = self.dialogViewHelper
     }
@@ -902,7 +937,7 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
         print(error, to:&standardError)
         let str = error.localizedDescription
         self.removeWaiting()
-        self.tableData.append(["name": NSLocalizedString("Error", tableName: nil, bundle: Bundle(for: type(of: self)), value: "", comment:"") as AnyObject, "type": 1 as AnyObject,  "image": "conversation.png" as AnyObject, "message": str as AnyObject])
+        self.tableData.append(["name": NSLocalizedString("Error", tableName: nil, bundle: Bundle.module, value: "", comment:"") as AnyObject, "type": 1 as AnyObject,  "image": "conversation.png" as AnyObject, "message": str as AnyObject])
         self.refreshTableView()
         DispatchQueue.main.async(execute: { [weak self] in
             if let weakself = self {
@@ -923,7 +958,7 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
     
     func timeoutCustom(){
         if timeoutCount >= 0 { // temporary fix
-            let str = NSLocalizedString("WAIT_ACTION", tableName: nil, bundle: Bundle(for: type(of: self)), value: "", comment:"")
+            let str = NSLocalizedString("WAIT_ACTION", tableName: nil, bundle: Bundle.module, value: "", comment:"")
             self.tableData.append(["name": self.agent_name as AnyObject, "type": 1 as AnyObject,  "image": "conversation.png" as AnyObject, "message": str as AnyObject])
             self.refreshTableView()
             self.failDialog()
@@ -932,7 +967,7 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
             return
         }
         
-        self.sendmessage("", notimeout: true)
+        self.sendMessage("", notimeout: true)
         timeoutCount = timeoutCount + 1
     }
     
@@ -943,7 +978,7 @@ public class DialogViewController: UIViewController, UITableViewDelegate, UITabl
         
         stt.listen([([".*"], {[weak self] (_,_) in
             if let weakself = self {
-                weakself.sendmessage("")
+                weakself.sendMessage("")
             }
         })], selfvoice: response,speakendactions:[({[weak self] str in
             if let weakself = self {

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2016  IBM Corporation, Carnegie Mellon University and others
+ * Copyright (c) 2014, 2021  IBM Corporation, Carnegie Mellon University and others
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,14 +20,14 @@
  * THE SOFTWARE.
  *******************************************************************************/
 
-import Foundation
 
-@objc
-public protocol TTSProtocol {
-    func speak(_ text:String?, callback: @escaping ()->Void)
-    func stop()
-    func stop(_ immediate: Bool)
-    
-    func vibrate()
-    func playVoiceRecoStart()
+import class Foundation.Bundle
+
+private class BundleFinder {}
+
+extension Foundation.Bundle {
+    /// Returns the resource bundle associated with the current Swift module.
+    static var module: Bundle = {
+        return Bundle(for: type(of: DialogManager.sharedManager()))
+    }()
 }

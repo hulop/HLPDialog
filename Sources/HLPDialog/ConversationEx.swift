@@ -24,8 +24,20 @@ import Foundation
 import RestKit
 import AssistantV1
 
+public protocol HLPConversation {
+    func errorResponseDecoder(data: Data, response: HTTPURLResponse) -> RestError
+
+    func message(
+        _ text: String?,
+        server: String,
+        api_key: String,
+        client_id: String?,
+        context: Context?,
+        completionHandler: @escaping (RestResponse<MessageResponse>?, Error?) -> Void)
+}
+
 @objcMembers
-open class ConversationEx {
+open class ConversationEx: HLPConversation {
 
     fileprivate let domain = "hulop.navcog.ConversationV1"
     static var running = false
@@ -35,7 +47,7 @@ open class ConversationEx {
     public init() {
     }
 
-    func errorResponseDecoder(data: Data, response: HTTPURLResponse) -> RestError {
+    public func errorResponseDecoder(data: Data, response: HTTPURLResponse) -> RestError {
 
         let statusCode = response.statusCode
         var errorMessage: String?
@@ -119,13 +131,13 @@ open class ConversationEx {
                 case .noResponse:
                     let domain = "swift.conversationex"
                     let code = -1
-                    let message = NSLocalizedString("checkNetworkConnection", tableName: nil, bundle: Bundle(for: type(of: self)), value: "", comment:"")
+                    let message = NSLocalizedString("checkNetworkConnection", tableName: nil, bundle: Bundle.module, value: "", comment:"")
                     let userInfo = [NSLocalizedDescriptionKey: message]
                     completionHandler(response, NSError(domain: domain, code: code, userInfo: userInfo))
                 default:
                     let domain = "swift.conversationex"
                     let code = -1
-                    let message = NSLocalizedString("serverConnectionError", tableName: nil, bundle: Bundle(for: type(of: self)), value: "", comment:"")
+                    let message = NSLocalizedString("serverConnectionError", tableName: nil, bundle: Bundle.module, value: "", comment:"")
                     let userInfo = [NSLocalizedDescriptionKey: message]
                     completionHandler(response, NSError(domain: domain, code: code, userInfo: userInfo))
                 }

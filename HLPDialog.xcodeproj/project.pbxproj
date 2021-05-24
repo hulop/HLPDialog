@@ -3,11 +3,25 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7E1BE48E1F25C99600FF17BD /* DialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1BE48D1F25C99600FF17BD /* DialogViewController.swift */; };
+		306A57D1265C2190006B510D /* AssistantV1 in Frameworks */ = {isa = PBXBuildFile; productRef = 306A57D0265C2190006B510D /* AssistantV1 */; };
+		306C7FC4265D82B900E5928E /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306C7FB6265D82B900E5928E /* CustomTableViewCell.swift */; };
+		306C7FC6265D82B900E5928E /* STTHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306C7FB8265D82B900E5928E /* STTHelper.swift */; };
+		306C7FC7265D82B900E5928E /* AnimLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306C7FB9265D82B900E5928E /* AnimLayer.swift */; };
+		306C7FC9265D82B900E5928E /* ConversationEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306C7FBB265D82B900E5928E /* ConversationEx.swift */; };
+		306C7FCA265D82B900E5928E /* LocalContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306C7FBC265D82B900E5928E /* LocalContext.swift */; };
+		306C7FCB265D82B900E5928E /* DialogViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306C7FBD265D82B900E5928E /* DialogViewHelper.swift */; };
+		306C7FCC265D82B900E5928E /* DialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306C7FBE265D82B900E5928E /* DialogViewController.swift */; };
+		306C7FCF265D82B900E5928E /* DialogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306C7FC1265D82B900E5928E /* DialogManager.swift */; };
+		306C7FD0265D82B900E5928E /* TextToSpeech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306C7FC2265D82B900E5928E /* TextToSpeech.swift */; };
+		306C7FD1265D82B900E5928E /* CustomArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306C7FC3265D82B900E5928E /* CustomArrow.swift */; };
+		306C7FD3265D82EF00E5928E /* BundleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306C7FD2265D82EF00E5928E /* BundleExtension.swift */; };
+		306C7FEF265D931400E5928E /* en.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 306C7FEB265D931400E5928E /* en.lproj */; };
+		306C7FF0265D931400E5928E /* icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 306C7FEC265D931400E5928E /* icons.xcassets */; };
+		306C7FF2265D931400E5928E /* ja.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 306C7FEE265D931400E5928E /* ja.lproj */; };
 		7EDAFE671F29DB4400368058 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDAFE661F29DB4400368058 /* AppDelegate.swift */; };
 		7EDAFE691F29DB4400368058 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDAFE681F29DB4400368058 /* ViewController.swift */; };
 		7EDAFE6C1F29DB4400368058 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EDAFE6A1F29DB4400368058 /* Main.storyboard */; };
@@ -17,27 +31,10 @@
 		7EDAFE771F29DB5300368058 /* HLPDialog.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD957C1F21D5DE00A00D5D /* HLPDialog.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7EDAFE7C1F29E0DA00368058 /* DummyTTS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDAFE7B1F29E0DA00368058 /* DummyTTS.swift */; };
 		7EDAFE7F1F29E63100368058 /* Speech.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD95911F21DD0C00A00D5D /* Speech.framework */; };
-		7EDAFE821F29E65500368058 /* RestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD95891F21DBE100A00D5D /* RestKit.framework */; };
-		7EDAFE831F29E65500368058 /* RestKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD95891F21DBE100A00D5D /* RestKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A9791D8E1F90A7FB00631165 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9791D8D1F90A7FB00631165 /* AVFoundation.framework */; };
-		A9C39A2921BA247200EF5F5D /* AssistantV1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9C39A2821BA247200EF5F5D /* AssistantV1.framework */; };
-		A9C39A2A21BA256A00EF5F5D /* AssistantV1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9C39A2821BA247200EF5F5D /* AssistantV1.framework */; };
-		A9C39A2D21BA2FBA00EF5F5D /* AssistantV1.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9C39A2821BA247200EF5F5D /* AssistantV1.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		A9CD958A1F21DBE100A00D5D /* RestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD95891F21DBE100A00D5D /* RestKit.framework */; };
 		A9CD958E1F21DCFA00A00D5D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD958D1F21DCFA00A00D5D /* Foundation.framework */; };
 		A9CD95901F21DD0200A00D5D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD958F1F21DD0200A00D5D /* UIKit.framework */; };
 		A9CD95921F21DD0C00A00D5D /* Speech.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD95911F21DD0C00A00D5D /* Speech.framework */; };
-		A9CD95941F21DE8400A00D5D /* ConversationEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CD95931F21DE8400A00D5D /* ConversationEx.swift */; };
-		A9CD95981F21DE9100A00D5D /* CustomArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CD95951F21DE9100A00D5D /* CustomArrow.swift */; };
-		A9CD95991F21DE9100A00D5D /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CD95961F21DE9100A00D5D /* CustomTableViewCell.swift */; };
-		A9CD959A1F21DE9100A00D5D /* DialogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CD95971F21DE9100A00D5D /* DialogManager.swift */; };
-		A9CD959C1F21DE9900A00D5D /* LocalContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CD959B1F21DE9900A00D5D /* LocalContext.swift */; };
-		A9CD95AD1F21DEBE00A00D5D /* AnimLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CD95A81F21DEBE00A00D5D /* AnimLayer.swift */; };
-		A9CD95AE1F21DEBE00A00D5D /* DialogViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CD95A91F21DEBE00A00D5D /* DialogViewHelper.swift */; };
-		A9CD95AF1F21DEBE00A00D5D /* icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9CD95AA1F21DEBE00A00D5D /* icons.xcassets */; };
-		A9CD95B01F21DEBE00A00D5D /* STTHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CD95AB1F21DEBE00A00D5D /* STTHelper.swift */; };
-		A9CD95B11F21DEBE00A00D5D /* TextToSpeech.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CD95AC1F21DEBE00A00D5D /* TextToSpeech.swift */; };
-		A9EF78011F2F0B9000AC72D8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A9EF78031F2F0B9000AC72D8 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,9 +54,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A9C39A2D21BA2FBA00EF5F5D /* AssistantV1.framework in Embed Frameworks */,
 				7EDAFE771F29DB5300368058 /* HLPDialog.framework in Embed Frameworks */,
-				7EDAFE831F29E65500368058 /* RestKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -67,7 +62,23 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		7E1BE48D1F25C99600FF17BD /* DialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogViewController.swift; sourceTree = "<group>"; };
+		306A57CA265C1369006B510D /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		306C7F95265D578600E5928E /* Sources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sources; sourceTree = "<group>"; };
+		306C7FB6265D82B900E5928E /* CustomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomTableViewCell.swift; path = Sources/HLPDialog/CustomTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		306C7FB8265D82B900E5928E /* STTHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = STTHelper.swift; path = Sources/HLPDialog/STTHelper.swift; sourceTree = SOURCE_ROOT; };
+		306C7FB9265D82B900E5928E /* AnimLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnimLayer.swift; path = Sources/HLPDialog/AnimLayer.swift; sourceTree = SOURCE_ROOT; };
+		306C7FBB265D82B900E5928E /* ConversationEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConversationEx.swift; path = Sources/HLPDialog/ConversationEx.swift; sourceTree = SOURCE_ROOT; };
+		306C7FBC265D82B900E5928E /* LocalContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocalContext.swift; path = Sources/HLPDialog/LocalContext.swift; sourceTree = SOURCE_ROOT; };
+		306C7FBD265D82B900E5928E /* DialogViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DialogViewHelper.swift; path = Sources/HLPDialog/DialogViewHelper.swift; sourceTree = SOURCE_ROOT; };
+		306C7FBE265D82B900E5928E /* DialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DialogViewController.swift; path = Sources/HLPDialog/DialogViewController.swift; sourceTree = SOURCE_ROOT; };
+		306C7FC1265D82B900E5928E /* DialogManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DialogManager.swift; path = Sources/HLPDialog/DialogManager.swift; sourceTree = SOURCE_ROOT; };
+		306C7FC2265D82B900E5928E /* TextToSpeech.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextToSpeech.swift; path = Sources/HLPDialog/TextToSpeech.swift; sourceTree = SOURCE_ROOT; };
+		306C7FC3265D82B900E5928E /* CustomArrow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomArrow.swift; path = Sources/HLPDialog/CustomArrow.swift; sourceTree = SOURCE_ROOT; };
+		306C7FD2265D82EF00E5928E /* BundleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleExtension.swift; sourceTree = SOURCE_ROOT; };
+		306C7FEB265D931400E5928E /* en.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; name = en.lproj; path = Sources/HLPDialog/en.lproj; sourceTree = "<group>"; };
+		306C7FEC265D931400E5928E /* icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = icons.xcassets; path = Sources/HLPDialog/icons.xcassets; sourceTree = "<group>"; };
+		306C7FED265D931400E5928E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Sources/HLPDialog/Info.plist; sourceTree = "<group>"; };
+		306C7FEE265D931400E5928E /* ja.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ja.lproj; path = Sources/HLPDialog/ja.lproj; sourceTree = "<group>"; };
 		7EDAFE641F29DB4400368058 /* HLPDialogTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HLPDialogTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EDAFE661F29DB4400368058 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7EDAFE681F29DB4400368058 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -77,25 +88,10 @@
 		7EDAFE721F29DB4400368058 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7EDAFE7B1F29E0DA00368058 /* DummyTTS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DummyTTS.swift; sourceTree = "<group>"; };
 		A9791D8D1F90A7FB00631165 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		A9C39A2821BA247200EF5F5D /* AssistantV1.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssistantV1.framework; path = Carthage/Build/iOS/AssistantV1.framework; sourceTree = "<group>"; };
 		A9CD957C1F21D5DE00A00D5D /* HLPDialog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HLPDialog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A9CD95801F21D5DE00A00D5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A9CD95891F21DBE100A00D5D /* RestKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RestKit.framework; path = Carthage/Build/iOS/RestKit.framework; sourceTree = "<group>"; };
 		A9CD958D1F21DCFA00A00D5D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A9CD958F1F21DD0200A00D5D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A9CD95911F21DD0C00A00D5D /* Speech.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Speech.framework; path = System/Library/Frameworks/Speech.framework; sourceTree = SDKROOT; };
-		A9CD95931F21DE8400A00D5D /* ConversationEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationEx.swift; sourceTree = "<group>"; };
-		A9CD95951F21DE9100A00D5D /* CustomArrow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomArrow.swift; sourceTree = "<group>"; };
-		A9CD95961F21DE9100A00D5D /* CustomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
-		A9CD95971F21DE9100A00D5D /* DialogManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogManager.swift; sourceTree = "<group>"; };
-		A9CD959B1F21DE9900A00D5D /* LocalContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalContext.swift; sourceTree = "<group>"; };
-		A9CD95A81F21DEBE00A00D5D /* AnimLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimLayer.swift; sourceTree = "<group>"; };
-		A9CD95A91F21DEBE00A00D5D /* DialogViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogViewHelper.swift; sourceTree = "<group>"; };
-		A9CD95AA1F21DEBE00A00D5D /* icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = icons.xcassets; sourceTree = "<group>"; };
-		A9CD95AB1F21DEBE00A00D5D /* STTHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTHelper.swift; sourceTree = "<group>"; };
-		A9CD95AC1F21DEBE00A00D5D /* TextToSpeech.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextToSpeech.swift; sourceTree = "<group>"; };
-		A9EF78041F2F0B9600AC72D8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		A9EF78051F2F0B9C00AC72D8 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,10 +99,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9C39A2A21BA256A00EF5F5D /* AssistantV1.framework in Frameworks */,
 				7EDAFE761F29DB5300368058 /* HLPDialog.framework in Frameworks */,
 				7EDAFE7F1F29E63100368058 /* Speech.framework in Frameworks */,
-				7EDAFE821F29E65500368058 /* RestKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,10 +108,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9C39A2921BA247200EF5F5D /* AssistantV1.framework in Frameworks */,
+				306A57D1265C2190006B510D /* AssistantV1 in Frameworks */,
 				A9791D8E1F90A7FB00631165 /* AVFoundation.framework in Frameworks */,
 				A9CD958E1F21DCFA00A00D5D /* Foundation.framework in Frameworks */,
-				A9CD958A1F21DBE100A00D5D /* RestKit.framework in Frameworks */,
 				A9CD95921F21DD0C00A00D5D /* Speech.framework in Frameworks */,
 				A9CD95901F21DD0200A00D5D /* UIKit.framework in Frameworks */,
 			);
@@ -126,6 +119,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		306C7F99265D81A500E5928E /* HLPDialog */ = {
+			isa = PBXGroup;
+			children = (
+				306C7FB9265D82B900E5928E /* AnimLayer.swift */,
+				306C7FBB265D82B900E5928E /* ConversationEx.swift */,
+				306C7FC3265D82B900E5928E /* CustomArrow.swift */,
+				306C7FB6265D82B900E5928E /* CustomTableViewCell.swift */,
+				306C7FC1265D82B900E5928E /* DialogManager.swift */,
+				306C7FBE265D82B900E5928E /* DialogViewController.swift */,
+				306C7FBD265D82B900E5928E /* DialogViewHelper.swift */,
+				306C7FBC265D82B900E5928E /* LocalContext.swift */,
+				306C7FB8265D82B900E5928E /* STTHelper.swift */,
+				306C7FC2265D82B900E5928E /* TextToSpeech.swift */,
+				306C7FD2265D82EF00E5928E /* BundleExtension.swift */,
+			);
+			path = HLPDialog;
+			sourceTree = "<group>";
+		};
+		306C7FF3265D933000E5928E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				306C7FEB265D931400E5928E /* en.lproj */,
+				306C7FEC265D931400E5928E /* icons.xcassets */,
+				306C7FED265D931400E5928E /* Info.plist */,
+				306C7FEE265D931400E5928E /* ja.lproj */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		7EDAFE651F29DB4400368058 /* HLPDialogTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -143,7 +165,10 @@
 		A9CD95721F21D5DE00A00D5D = {
 			isa = PBXGroup;
 			children = (
-				A9CD957E1F21D5DE00A00D5D /* HLPDialog */,
+				306A57CA265C1369006B510D /* Package.swift */,
+				306C7F99265D81A500E5928E /* HLPDialog */,
+				306C7FF3265D933000E5928E /* Resources */,
+				306C7F95265D578600E5928E /* Sources */,
 				7EDAFE651F29DB4400368058 /* HLPDialogTest */,
 				A9CD957D1F21D5DE00A00D5D /* Products */,
 				A9CD95881F21DBE100A00D5D /* Frameworks */,
@@ -159,53 +184,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A9CD957E1F21D5DE00A00D5D /* HLPDialog */ = {
-			isa = PBXGroup;
-			children = (
-				A9CD95971F21DE9100A00D5D /* DialogManager.swift */,
-				7E1BE48D1F25C99600FF17BD /* DialogViewController.swift */,
-				A9CD95931F21DE8400A00D5D /* ConversationEx.swift */,
-				A9CD95951F21DE9100A00D5D /* CustomArrow.swift */,
-				A9CD95961F21DE9100A00D5D /* CustomTableViewCell.swift */,
-				A9CD959B1F21DE9900A00D5D /* LocalContext.swift */,
-				A9CD95A71F21DEBE00A00D5D /* stthelper */,
-				A9EF78071F2F121C00AC72D8 /* Supporting Files */,
-			);
-			path = HLPDialog;
-			sourceTree = "<group>";
-		};
 		A9CD95881F21DBE100A00D5D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				A9791D8D1F90A7FB00631165 /* AVFoundation.framework */,
-				A9C39A2821BA247200EF5F5D /* AssistantV1.framework */,
 				A9CD958D1F21DCFA00A00D5D /* Foundation.framework */,
-				A9CD95891F21DBE100A00D5D /* RestKit.framework */,
 				A9CD95911F21DD0C00A00D5D /* Speech.framework */,
 				A9CD958F1F21DD0200A00D5D /* UIKit.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		A9CD95A71F21DEBE00A00D5D /* stthelper */ = {
-			isa = PBXGroup;
-			children = (
-				A9CD95A81F21DEBE00A00D5D /* AnimLayer.swift */,
-				A9CD95A91F21DEBE00A00D5D /* DialogViewHelper.swift */,
-				A9CD95AA1F21DEBE00A00D5D /* icons.xcassets */,
-				A9CD95AB1F21DEBE00A00D5D /* STTHelper.swift */,
-				A9CD95AC1F21DEBE00A00D5D /* TextToSpeech.swift */,
-			);
-			path = stthelper;
-			sourceTree = "<group>";
-		};
-		A9EF78071F2F121C00AC72D8 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				A9EF78031F2F0B9000AC72D8 /* Localizable.strings */,
-				A9CD95801F21D5DE00A00D5D /* Info.plist */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -247,7 +234,6 @@
 				A9CD95771F21D5DE00A00D5D /* Sources */,
 				A9CD95781F21D5DE00A00D5D /* Frameworks */,
 				A9CD95791F21D5DE00A00D5D /* Headers */,
-				A9CD95871F21DA9800A00D5D /* ShellScript */,
 				A9CD957A1F21D5DE00A00D5D /* Resources */,
 			);
 			buildRules = (
@@ -255,6 +241,9 @@
 			dependencies = (
 			);
 			name = HLPDialog;
+			packageProductDependencies = (
+				306A57D0265C2190006B510D /* AssistantV1 */,
+			);
 			productName = HLPDialog;
 			productReference = A9CD957C1F21D5DE00A00D5D /* HLPDialog.framework */;
 			productType = "com.apple.product-type.framework";
@@ -266,7 +255,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1250;
 				ORGANIZATIONNAME = HULOP;
 				TargetAttributes = {
 					7EDAFE631F29DB4400368058 = {
@@ -283,16 +272,18 @@
 			};
 			buildConfigurationList = A9CD95761F21D5DE00A00D5D /* Build configuration list for PBXProject "HLPDialog" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 				ja,
 				"en-US",
 			);
 			mainGroup = A9CD95721F21D5DE00A00D5D;
+			packageReferences = (
+				306A57CF265C2190006B510D /* XCRemoteSwiftPackageReference "swift-sdk" */,
+			);
 			productRefGroup = A9CD957D1F21D5DE00A00D5D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -318,30 +309,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9CD95AF1F21DEBE00A00D5D /* icons.xcassets in Resources */,
-				A9EF78011F2F0B9000AC72D8 /* Localizable.strings in Resources */,
+				306C7FEF265D931400E5928E /* en.lproj in Resources */,
+				306C7FF0265D931400E5928E /* icons.xcassets in Resources */,
+				306C7FF2265D931400E5928E /* ja.lproj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		A9CD95871F21DA9800A00D5D /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/AssistantV1.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RestKit.framework",
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		7EDAFE601F29DB4400368058 /* Sources */ = {
@@ -358,16 +332,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9CD95991F21DE9100A00D5D /* CustomTableViewCell.swift in Sources */,
-				A9CD95AE1F21DEBE00A00D5D /* DialogViewHelper.swift in Sources */,
-				7E1BE48E1F25C99600FF17BD /* DialogViewController.swift in Sources */,
-				A9CD95AD1F21DEBE00A00D5D /* AnimLayer.swift in Sources */,
-				A9CD959A1F21DE9100A00D5D /* DialogManager.swift in Sources */,
-				A9CD95981F21DE9100A00D5D /* CustomArrow.swift in Sources */,
-				A9CD959C1F21DE9900A00D5D /* LocalContext.swift in Sources */,
-				A9CD95B01F21DEBE00A00D5D /* STTHelper.swift in Sources */,
-				A9CD95B11F21DEBE00A00D5D /* TextToSpeech.swift in Sources */,
-				A9CD95941F21DE8400A00D5D /* ConversationEx.swift in Sources */,
+				306C7FC4265D82B900E5928E /* CustomTableViewCell.swift in Sources */,
+				306C7FCF265D82B900E5928E /* DialogManager.swift in Sources */,
+				306C7FC6265D82B900E5928E /* STTHelper.swift in Sources */,
+				306C7FCB265D82B900E5928E /* DialogViewHelper.swift in Sources */,
+				306C7FC7265D82B900E5928E /* AnimLayer.swift in Sources */,
+				306C7FCA265D82B900E5928E /* LocalContext.swift in Sources */,
+				306C7FD1265D82B900E5928E /* CustomArrow.swift in Sources */,
+				306C7FC9265D82B900E5928E /* ConversationEx.swift in Sources */,
+				306C7FD0265D82B900E5928E /* TextToSpeech.swift in Sources */,
+				306C7FCC265D82B900E5928E /* DialogViewController.swift in Sources */,
+				306C7FD3265D82EF00E5928E /* BundleExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,15 +373,6 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
-		A9EF78031F2F0B9000AC72D8 /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A9EF78041F2F0B9600AC72D8 /* en */,
-				A9EF78051F2F0B9C00AC72D8 /* ja */,
-			);
-			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -424,7 +390,10 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = HLPDialogTest/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.hulop.HLPDialogTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -446,7 +415,10 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = HLPDialogTest/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.hulop.HLPDialogTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -480,6 +452,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -505,7 +478,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -543,6 +516,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -562,10 +536,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -589,10 +564,15 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = HLPDialog/Info.plist;
+				INFOPLIST_FILE = Sources/HLPDialog/Info.plist;
 				INSTALL_PATH = "@rpath";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.hulop.HLPDialog;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -620,10 +600,15 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = HLPDialog/Info.plist;
+				INFOPLIST_FILE = Sources/HLPDialog/Info.plist;
 				INSTALL_PATH = "@rpath";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = org.hulop.HLPDialog;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -665,6 +650,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		306A57CF265C2190006B510D /* XCRemoteSwiftPackageReference "swift-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "http://github.com/watson-developer-cloud/swift-sdk";
+			requirement = {
+				kind = exactVersion;
+				version = 1.4.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		306A57D0265C2190006B510D /* AssistantV1 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 306A57CF265C2190006B510D /* XCRemoteSwiftPackageReference "swift-sdk" */;
+			productName = AssistantV1;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A9CD95731F21D5DE00A00D5D /* Project object */;
 }
