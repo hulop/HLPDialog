@@ -139,6 +139,8 @@ open class DialogViewController: UIViewController, UITableViewDelegate, UITableV
         nc.addObserver(self, selector: #selector(pauseConversation), name: DialogManager.REQUEST_DIALOG_PAUSE, object: nil)
         nc.addObserver(self, selector: #selector(requestDialogEnd), name: DialogManager.REQUEST_DIALOG_END, object: nil)
         nc.addObserver(self, selector: #selector(requestDialogAction), name: DialogManager.REQUEST_DIALOG_ACTION, object: nil)
+
+        resetConversation()
     }
     
     internal func updateView() {
