@@ -87,7 +87,7 @@ open class DialogViewController: UIViewController, UITableViewDelegate, UITableV
     let white:UIColor = UIColor(red: CGFloat(244/255.0), green: CGFloat(244/255.0), blue: CGFloat(236/255.0), alpha:1.0)
     let black:UIColor = UIColor(red: CGFloat(65/255.0), green: CGFloat(70/255.0), blue: CGFloat(76/255.0), alpha:1.0)
     
-    var tableData:[Dictionary<String,Any>]!
+    var tableData:[Dictionary<String,Any>] = []
     var heightLeftCell: CustomLeftTableViewCell = CustomLeftTableViewCell()
     var heightRightCell: CustomRightTableViewCell = CustomRightTableViewCell()
     
