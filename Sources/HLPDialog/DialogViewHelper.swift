@@ -400,9 +400,11 @@ public class DialogViewHelper: NSObject, TTSUIProtocol {
         if let ttm = self.textTimer{
             ttm.invalidate()
         }
-        self.label.text = ""
-        self.label.removeFromSuperview()
-        self.helperView.removeFromSuperview()
+        if self.label != nil {
+            self.label.text = ""
+            self.label.removeFromSuperview()
+        }
+        self.helperView?.removeFromSuperview()
         self.text = ""
     }
     
