@@ -140,7 +140,6 @@ open class DialogViewController: UIViewController, UITableViewDelegate, UITableV
         nc.addObserver(self, selector: #selector(requestDialogEnd), name: DialogManager.REQUEST_DIALOG_END, object: nil)
         nc.addObserver(self, selector: #selector(requestDialogAction), name: DialogManager.REQUEST_DIALOG_ACTION, object: nil)
 
-        resetConversation()
     }
     
     internal func updateView() {
@@ -152,17 +151,13 @@ open class DialogViewController: UIViewController, UITableViewDelegate, UITableV
     
     override public func viewDidAppear(_ animated: Bool) {
         print(Date(), #function, #line)
-        if !UIAccessibility.isVoiceOverRunning {
-            restartConversation()
-            DialogManager.sharedManager().isActive = true
-        } else {
-            _ = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(start), userInfo: nil, repeats: false)
-        }
-    }
 
-    internal func start() {
-        restartConversation()
-        DialogManager.sharedManager().isActive = true
+        let delay = UIAccessibility.isVoiceOverRunning ? 2.0 : 1.0
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+
+            self.restartConversation()
+            DialogManager.sharedManager().isActive = true
+        }
     }
     
     override public func viewWillDisappear(_ animated: Bool) {

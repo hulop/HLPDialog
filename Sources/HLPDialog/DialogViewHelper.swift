@@ -130,7 +130,10 @@ public class DialogViewHelper: NSObject, TTSUIProtocol {
     fileprivate var micimgr:CGImage!        // mic red image
     fileprivate var power:Float = 0.0       // mic audio power
     fileprivate var recording = false       // recording flag
-    fileprivate var threthold:Float = 80    // if power is bigger than threthold then volume indicator becomes biga
+
+    fileprivate let MaxDB:Float = 110
+    fileprivate var threthold:Float = 60    // if power is bigger than threthold then volume indicator becomes biga
+    
     fileprivate var maxScaleOfVolumeIndicator:Float = 1.4       // maximum scale for volume indicator
     fileprivate var speed:Float = 0.05      // reducing time
     
@@ -144,8 +147,7 @@ public class DialogViewHelper: NSObject, TTSUIProtocol {
     
     public var label: UILabel!
     
-    fileprivate let Frequency:Float = 1.0/30.0
-    fileprivate let MaxDB:Float = 110
+    fileprivate let Frequency:Float = 1.0/60.0
     fileprivate var IconBackgroundSize:CGFloat = 139
     fileprivate var IconCircleSize:CGFloat = 113
     fileprivate var IconSize:CGFloat = 90
@@ -486,18 +488,8 @@ public class DialogViewHelper: NSObject, TTSUIProtocol {
         var p:Float = power - threthold
         p = p / (MaxDB-threthold)
         p = max(p, 0)
-        
-        if (false) {
-            peakTimer -= Frequency
 
-            if (peakTimer < 0) { // reduce max power gradually
-                power -= MaxDB*Frequency/speed
-                power = max(power, 0)
-            }
-        }
-        
         indicatorCenter.size = min(CGFloat(p * (maxScaleOfVolumeIndicator - 1.0) + 1.0) * IconSize, IconCircleSize)
-        //print("\(p), \(scale), \(indicatorCenter.size)")
         self.indicatorCenter.setNeedsDisplay()
     }
     
@@ -645,7 +637,7 @@ public class DialogViewHelper: NSObject, TTSUIProtocol {
                 self.label.text = text
             }
             self.text = text
-            NSLog("showText: \(text)")
+            //NSLog("showText: \(text)")
         }
 
     }

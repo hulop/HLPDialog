@@ -36,11 +36,12 @@ class DummyTTS: NSObject, TTSProtocol, AVSpeechSynthesizerDelegate {
         synthe.delegate = self
         let u = AVSpeechUtterance(string: text)
         map[text] = callback
+        NSLog("speech started: "+text)
         synthe.speak(u)
     }
 
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
-        print("didFinish "+utterance.speechString)
+        NSLog("speech finished: "+utterance.speechString)
         if let callback = map[utterance.speechString] {
             callback()
         }

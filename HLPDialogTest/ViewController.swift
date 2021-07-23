@@ -105,19 +105,9 @@ class ViewController: UIViewController, DialogViewDelegate {
     // MARK: - DialogViewDelegate
 
     func dialogViewTapped() {
-
-        // todo
-        let audioSession:AVAudioSession = AVAudioSession.sharedInstance()
-        do {
-            try audioSession.setCategory(.playAndRecord, mode: .measurement, options: [.allowBluetooth])
-            try audioSession.setActive(true)
-        } catch {
-            _ = print("Error in audio session setting")
-        }
-
         let dialogView = DialogViewControllerLocal()
         dialogView.tts = DummyTTS()
-        dialogView.baseHelper = dialogHelper
+        dialogView.baseHelper = self.dialogHelper
         dialogView.scriptURL = Bundle.main.url(forResource: "conv", withExtension: "js")
         self.navigationController?.pushViewController(dialogView, animated: true)
     }
@@ -127,9 +117,6 @@ class ViewController: UIViewController, DialogViewDelegate {
 
 class DialogViewControllerLocal : DialogViewController{
     var scriptURL: URL?
-
-    override func viewDidLoad() {
-    }
 
     override func getConversation(pre: Locale) -> HLPConversation {
         return LocalConversation(withScript: scriptURL!)

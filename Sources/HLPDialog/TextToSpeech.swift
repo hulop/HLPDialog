@@ -32,9 +32,9 @@ public protocol TTSUIProtocol{
 @objc
 public protocol TTSProtocol {
     func speak(_ text:String?, callback: @escaping ()->Void)
+
     func stop()
     func stop(_ immediate: Bool)
-    
     func vibrate()
     func playVoiceRecoStart()
 }

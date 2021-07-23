@@ -25,6 +25,7 @@ import UIKit
 import AVFoundation
 import Speech
 
+
 @objcMembers
 open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SFSpeechRecognizerDelegate {
     
@@ -45,23 +46,19 @@ open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SF
     var last_failure:(NSError)->Void = {arg in}
     var last_timeout:()->Void = { () in}
     var last_text: String = ""
-    var listeningStart:Double = 0
-    var avePower:Double = 0
-    var aveCount:Int64 = 0
+
     var stopstt:()->()
-    
+    let waitDelay = 0.0
+
     var pwCaptureSession:AVCaptureSession? = nil
     var audioDataQueue:DispatchQueue? = nil
     
-    var arecorder:AVAudioRecorder? = nil
     var timeoutTimer:Timer? = nil
     var timeoutDuration:TimeInterval = 20.0
-    var ametertimer:Timer? = nil
+
     var resulttimer:Timer? = nil
     var resulttimerDuration:TimeInterval = 1.0
-    var confidenceFilter = 0.2
-    var executeFilter = 0.3
-    var hesitationPrefix = "D_"
+
     var unknownErrorCount = 0
     public var useRawError = false
     
@@ -69,76 +66,35 @@ open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SF
         self.stopstt = {}
         self.audioDataQueue = DispatchQueue(label: "hulop.conversation", attributes: [])
         super.init()
-        self.initAudioRecorder()
 
         speechRecognizer.delegate = self
         SFSpeechRecognizer.requestAuthorization { authStatus in
             print(authStatus);
         }
-    }
-    fileprivate func initAudioRecorder(){
-        let doc = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)[0]
-        var url = URL(fileURLWithPath: doc)
-        url = url.appendingPathComponent("recordTest.caf")
-        let recsettings:[String:AnyObject] = [
-            AVFormatIDKey: Int(kAudioFormatAppleIMA4) as AnyObject,
-            AVSampleRateKey:44100.0 as AnyObject,
-            AVNumberOfChannelsKey:2 as AnyObject,
-            AVEncoderBitRateKey:12800 as AnyObject,
-            AVLinearPCMBitDepthKey:16 as AnyObject,
-            AVEncoderAudioQualityKey:AVAudioQuality.max.rawValue as AnyObject
-        ]
-        
-        self.arecorder = try? AVAudioRecorder(url:url,settings:recsettings)
-    }
-    var frecCaptureSession:AVCaptureSession? = nil
-    var frecDataQueue:DispatchQueue? = nil
-    func startRecording(_ input: AVCaptureDeviceInput){
-        self.stopRecording()
-        self.frecCaptureSession = AVCaptureSession()
-        if frecCaptureSession!.canAddInput(input){
-            frecCaptureSession!.addInput(input)
+
+        // need to set AVAudioSession before
+        let audioSession:AVAudioSession = AVAudioSession.sharedInstance()
+        do {
+            try audioSession.setCategory(.playAndRecord, mode: .default, options: [.allowBluetooth])
+            try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
+        } catch {
+            NSLog("Audio session error")
         }
+
+        self.initPWCaptureSession()
     }
-    func stopRecording(){
-        if self.frecCaptureSession != nil{
-            self.frecCaptureSession?.stopRunning()
-            for output in self.frecCaptureSession!.outputs{
-                self.frecCaptureSession?.removeOutput(output )
-            }
-            for input in self.frecCaptureSession!.inputs{
-                self.frecCaptureSession?.removeInput(input )
-            }
-            self.frecCaptureSession = nil
-        }
-    }
-    
+
     func createError(_ message:String) -> NSError{
         let domain = "swift.sttHelper"
         let code = -1
         let userInfo = [NSLocalizedDescriptionKey:message]
         return NSError(domain:domain, code: code, userInfo:userInfo)
     }
-    
-    fileprivate func findbtmicrophone(){
-        if let availableInputs = AVAudioSession.sharedInstance().availableInputs {
-            print("Found \(availableInputs.count) inputs")
-            for input in availableInputs {
-                print("Input: \(input)")
-                if input.portType == AVAudioSession.Port.bluetoothHFP {
-                    print("Setting preferred input")
-                    do {
-                        try AVAudioSession.sharedInstance().setPreferredInput(input)
-                    } catch {
-                        print("Error setting preferred input: \(error)")
-                    }
-                }
-            }
-        }
-    }
-    fileprivate func startPWCaptureSession(){//alternative
+
+    var pwCapturingStarted: Bool = false
+    var pwCapturingIgnore: Bool = false
+    fileprivate func initPWCaptureSession(){//alternative
         if nil == self.pwCaptureSession{
-            //self.findbtmicrophone()
             self.pwCaptureSession = AVCaptureSession()
             if let captureSession = self.pwCaptureSession{
                 captureSession.automaticallyConfiguresApplicationAudioSession = false
@@ -146,6 +102,7 @@ open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SF
                     let microphoneInput = try? AVCaptureDeviceInput(device: microphoneDevice)
                     if(captureSession.canAddInput(microphoneInput!)){
                         captureSession.addInput(microphoneInput!)
+
                         let adOutput = AVCaptureAudioDataOutput()
                         adOutput.setSampleBufferDelegate(self, queue: self.audioDataQueue)
                         if captureSession.canAddOutput(adOutput){
@@ -155,60 +112,74 @@ open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SF
                 }
             }
         }
-        self.pwCaptureSession?.startRunning()
+
+        if !pwCapturingStarted {
+            self.pwCaptureSession?.startRunning()
+        }
     }
+
+    fileprivate func startPWCaptureSession(){//alternative
+        pwCapturingIgnore = false
+    }
+
     fileprivate func stopPWCaptureSession(){
-        self.pwCaptureSession?.stopRunning()
+        pwCapturingIgnore = true
+        //self.pwCaptureSession?.stopRunning()
     }
 
     open func captureOutput(_ captureOutput: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        recognitionRequest?.appendAudioSampleBuffer(sampleBuffer)                
-        
-        let channels = connection.audioChannels
-        var peak:Float = 0;
-        for chnl in channels{
-            peak = (chnl as AnyObject).averagePowerLevel
+        // append buffer to recognition request
+        if !pwCapturingIgnore {
+            recognitionRequest?.appendAudioSampleBuffer(sampleBuffer)
         }
-        NSLog("capture \(peak)")
-        DispatchQueue.main.async{
-            self.delegate?.setMaxPower(peak + 110)
+        if !pwCapturingStarted {
+            NSLog("Recording started")
+        }
+        pwCapturingStarted = true
+
+        // get raw data and calcurate the power
+        var audioBufferList = AudioBufferList()
+        var blockBuffer: CMBlockBuffer?
+        CMSampleBufferGetAudioBufferListWithRetainedBlockBuffer(
+            sampleBuffer,
+            bufferListSizeNeededOut: nil,
+            bufferListOut: &audioBufferList,
+            bufferListSize: MemoryLayout.stride(ofValue: audioBufferList),
+            blockBufferAllocator: nil,
+            blockBufferMemoryAllocator: nil,
+            flags: kCMSampleBufferFlag_AudioBufferList_Assure16ByteAlignment,
+            blockBufferOut: &blockBuffer)
+        guard let data = audioBufferList.mBuffers.mData else {
+            return
+        }
+        let actualSampleCount = CMSampleBufferGetNumSamples(sampleBuffer)
+        let ptr = data.bindMemory(to: Int16.self, capacity: actualSampleCount)
+        let buf = UnsafeBufferPointer(start: ptr, count: actualSampleCount)
+        let array = Array(buf)
+
+        // check power in 256 sample window (62.5Hz @ 16000 sample per sec) and
+        // but buffer is bigger than this so set power level with delay
+        let setMaxPowerLambda:(Float, Double) -> Void = {power, delay in
+            DispatchQueue.main.asyncAfter(deadline: .now()+delay) {
+                self.delegate?.setMaxPower(power)
+            }
+        }
+
+        var count = 0
+        let windowSize = 256
+        var ave:Float = 0
+        for a in array {
+            count += 1
+            if count % windowSize == 0 {
+                // max is 110db
+                let power = 110 + (log10((ave+1) / Float(windowSize)) - log10(32768))*20
+                setMaxPowerLambda(power, Double(count) / 16000.0)
+                ave = 0
+            }
+            ave += Float(abs(a))
         }
     }
-    func startAudioRecorder(){
-        self.stopAudioRecorder()
-        
-        self.arecorder?.record()
-    }
-    func stopAudioRecorder(){
-        self.arecorder?.stop()
-    }
-    
-    func startAudioMetering(_ delegate: AVAudioRecorderDelegate?){
-        self.stopAudioMetering()
-        if let delegate = delegate{
-            self.arecorder?.delegate = delegate
-        }
-        self.arecorder?.isMeteringEnabled = true
-        self.startAudioRecorder()
-        self.ametertimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(STTHelper.onamUpdate),userInfo:nil, repeats:true)
-        self.ametertimer?.fire()
-    }
-    @objc func onamUpdate(){
-        self.arecorder?.updateMeters()
-        if let ave = self.arecorder?.averagePower(forChannel: 0){
-            self.delegate?.setMaxPower(ave + 120)
-            //            print(ave)
-        }
-    }
-    func stopAudioMetering(){
-        if self.ametertimer != nil{
-            self.arecorder?.isMeteringEnabled = false
-            self.ametertimer?.invalidate()
-            self.ametertimer = nil
-        }
-        self.stopAudioRecorder()
-    }
-    
+
     func startRecognize(_ actions: [([String],(String, UInt64)->Void)], failure: @escaping (NSError)->Void,  timeout: @escaping ()->Void){
         self.paused = false
         
@@ -338,23 +309,20 @@ open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SF
         }
     }
     
-    internal func _setTimeout(_ delay:TimeInterval, block:@escaping ()->Void) -> Timer {
-        return Timer.scheduledTimer(timeInterval: delay, target: BlockOperation(block: block), selector: #selector(Operation.main), userInfo: nil, repeats: false)
-    }
-    
     public func listen(_ actions: [([String],(String, UInt64)->Void)], selfvoice: String?, speakendactions:[((String)->Void)]?,avrdelegate:AVAudioRecorderDelegate?, failure:@escaping (NSError)->Void, timeout:@escaping ()->Void) {
         
         if (speaking) {
             NSLog("TTS is speaking so this listen is eliminated")
             return
         }
-        NSLog("Listen \(String(describing: selfvoice)) \(actions)")
+        NSLog("Listen \"\(selfvoice ?? "")\" \(actions)")
         self.last_actions = actions
 
         self.stoptimer()
         delegate?.speak()
         delegate?.showText(" ")
-        tts?.speak(selfvoice) {
+
+        self.tts?.speak(selfvoice) {
             if (!self.speaking) {
                 return
             }
@@ -364,22 +332,20 @@ open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SF
                     (act)(selfvoice!)
                 }
             }
-            self.listeningStart = self.now()
 
-            let delay = 0.4
             self.tts?.vibrate()
             self.tts?.playVoiceRecoStart()
-            
-            _ = self._setTimeout(delay, block: {
+
+            DispatchQueue.main.asyncAfter(deadline: .now()+self.waitDelay) {
                 self.startPWCaptureSession()//alternative
                 self.startRecognize(actions, failure: failure, timeout: timeout)
-                
+
                 self.delegate?.showText(NSLocalizedString("SPEAK_NOW", tableName: nil, bundle: Bundle.module, value: "", comment:"Speak Now!"),color: UIColor.black)
                 self.delegate?.listen()
-            })
-            
+            }
+
         }
-        speaking = true
+        self.speaking = true
     }
     
     func now() -> Double {
@@ -393,8 +359,6 @@ open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SF
         self.tts?.stop()
         self.speaking = false
         self.recognizing = false
-        self.stopAudioMetering()
-        self.arecorder?.stop()
         self.stopPWCaptureSession()
         self.stopstt()
         self.stoptimer()
@@ -404,8 +368,6 @@ open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SF
         tts?.stop()
         self.speaking = false
         self.recognizing = false
-        self.stopAudioMetering()
-        self.arecorder?.stop()
         self.stopPWCaptureSession()
         self.stopstt()
         self.stoptimer()
@@ -415,14 +377,13 @@ open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SF
         self.paused = false;
         self.restarting = true;
         if let actions = self.last_actions {
-            let delay = 0.4
             self.tts?.vibrate()
             self.tts?.playVoiceRecoStart()
-            
-            _ = self._setTimeout(delay, block: {
+
+            DispatchQueue.main.asyncAfter(deadline: .now()+self.waitDelay) {
                 self.startPWCaptureSession()
                 self.startRecognize(actions, failure:self.last_failure, timeout:self.last_timeout)
-            })
+            }
         }
     }
 
