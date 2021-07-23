@@ -169,6 +169,7 @@ open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SF
         for chnl in channels{
             peak = (chnl as AnyObject).averagePowerLevel
         }
+        NSLog("capture \(peak)")
         DispatchQueue.main.async{
             self.delegate?.setMaxPower(peak + 110)
         }
@@ -211,20 +212,13 @@ open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SF
     func startRecognize(_ actions: [([String],(String, UInt64)->Void)], failure: @escaping (NSError)->Void,  timeout: @escaping ()->Void){
         self.paused = false
         
-        let audioSession:AVAudioSession = AVAudioSession.sharedInstance()
-        do {
-            //try audioSession.setCategory(AVAudioSession.Category.record)
-            try audioSession.setCategory(AVAudioSession.Category.playAndRecord, options: [.mixWithOthers, .allowBluetooth, .defaultToSpeaker])
-            try audioSession.setActive(true)
-        } catch {
-        }
-        
         self.last_timeout = timeout
         self.last_failure = failure
                         
         recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
         recognitionRequest!.shouldReportPartialResults = true
         last_text = ""
+        NSLog("Start recognizing")
         recognitionTask = speechRecognizer.recognitionTask(with: recognitionRequest!, resultHandler: { [weak self] (result, e) in
             guard let weakself = self else {
                 return
@@ -404,13 +398,6 @@ open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SF
         self.stopPWCaptureSession()
         self.stopstt()
         self.stoptimer()
-
-        let avs:AVAudioSession = AVAudioSession.sharedInstance()
-        do {
-            try avs.setCategory(AVAudioSession.Category.soloAmbient)
-            try avs.setActive(true)
-        } catch {
-        }
     }
     
     public func endRecognize() {
@@ -422,13 +409,6 @@ open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SF
         self.stopPWCaptureSession()
         self.stopstt()
         self.stoptimer()
-
-        let avs:AVAudioSession = AVAudioSession.sharedInstance()
-        do {
-            try avs.setCategory(AVAudioSession.Category.soloAmbient)
-            try avs.setActive(true)
-        } catch {
-        }
     }
     
     public func restartRecognize() {
