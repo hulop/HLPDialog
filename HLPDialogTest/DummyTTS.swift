@@ -22,16 +22,29 @@
  
 import UIKit
 import HLPDialog
+import AVFoundation
 
-class DummyTTS: TTSProtocol {
+class DummyTTS: NSObject, TTSProtocol, AVSpeechSynthesizerDelegate {
+    var map: [String: ()->Void] = [:]
+    let synthe = AVSpeechSynthesizer()
+
     func speak(_ text:String?, callback: @escaping ()->Void) {
         guard let text = text else {
             return callback()
         }
-        let c = DispatchTimeInterval.milliseconds(Int(text.count * 100))
-        DispatchQueue.main.asyncAfter(deadline: .now() + c) {
+
+        synthe.delegate = self
+        let u = AVSpeechUtterance(string: text)
+        map[text] = callback
+        synthe.speak(u)
+    }
+
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        print("didFinish "+utterance.speechString)
+        if let callback = map[utterance.speechString] {
             callback()
         }
+        synthe.stopSpeaking(at: .immediate)
     }
     
     func stop() {

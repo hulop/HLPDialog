@@ -22,6 +22,9 @@
 		306C7FEF265D931400E5928E /* en.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 306C7FEB265D931400E5928E /* en.lproj */; };
 		306C7FF0265D931400E5928E /* icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 306C7FEC265D931400E5928E /* icons.xcassets */; };
 		306C7FF2265D931400E5928E /* ja.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 306C7FEE265D931400E5928E /* ja.lproj */; };
+		30F0C18C26AA9F07004BE661 /* LocalConversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F0C18B26AA9F07004BE661 /* LocalConversation.swift */; };
+		30F0C18E26AA9F19004BE661 /* JSHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F0C18D26AA9F19004BE661 /* JSHelper.swift */; };
+		30F0C19026AA9FBC004BE661 /* conv.js in Resources */ = {isa = PBXBuildFile; fileRef = 30F0C18F26AA9FBC004BE661 /* conv.js */; };
 		7EDAFE671F29DB4400368058 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDAFE661F29DB4400368058 /* AppDelegate.swift */; };
 		7EDAFE691F29DB4400368058 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDAFE681F29DB4400368058 /* ViewController.swift */; };
 		7EDAFE6C1F29DB4400368058 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EDAFE6A1F29DB4400368058 /* Main.storyboard */; };
@@ -79,6 +82,9 @@
 		306C7FEC265D931400E5928E /* icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = icons.xcassets; path = Sources/HLPDialog/icons.xcassets; sourceTree = "<group>"; };
 		306C7FED265D931400E5928E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Sources/HLPDialog/Info.plist; sourceTree = "<group>"; };
 		306C7FEE265D931400E5928E /* ja.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ja.lproj; path = Sources/HLPDialog/ja.lproj; sourceTree = "<group>"; };
+		30F0C18B26AA9F07004BE661 /* LocalConversation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocalConversation.swift; path = "../../cabot-app/CaBot/LocalConversation.swift"; sourceTree = "<group>"; };
+		30F0C18D26AA9F19004BE661 /* JSHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSHelper.swift; sourceTree = "<group>"; };
+		30F0C18F26AA9FBC004BE661 /* conv.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = conv.js; sourceTree = "<group>"; };
 		7EDAFE641F29DB4400368058 /* HLPDialogTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HLPDialogTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EDAFE661F29DB4400368058 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7EDAFE681F29DB4400368058 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -151,8 +157,11 @@
 		7EDAFE651F29DB4400368058 /* HLPDialogTest */ = {
 			isa = PBXGroup;
 			children = (
+				30F0C18F26AA9FBC004BE661 /* conv.js */,
 				7EDAFE661F29DB4400368058 /* AppDelegate.swift */,
 				7EDAFE681F29DB4400368058 /* ViewController.swift */,
+				30F0C18B26AA9F07004BE661 /* LocalConversation.swift */,
+				30F0C18D26AA9F19004BE661 /* JSHelper.swift */,
 				7EDAFE6A1F29DB4400368058 /* Main.storyboard */,
 				7EDAFE6D1F29DB4400368058 /* Assets.xcassets */,
 				7EDAFE6F1F29DB4400368058 /* LaunchScreen.storyboard */,
@@ -302,6 +311,7 @@
 				7EDAFE711F29DB4400368058 /* LaunchScreen.storyboard in Resources */,
 				7EDAFE6E1F29DB4400368058 /* Assets.xcassets in Resources */,
 				7EDAFE6C1F29DB4400368058 /* Main.storyboard in Resources */,
+				30F0C19026AA9FBC004BE661 /* conv.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,8 +332,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30F0C18C26AA9F07004BE661 /* LocalConversation.swift in Sources */,
 				7EDAFE7C1F29E0DA00368058 /* DummyTTS.swift in Sources */,
 				7EDAFE691F29DB4400368058 /* ViewController.swift in Sources */,
+				30F0C18E26AA9F19004BE661 /* JSHelper.swift in Sources */,
 				7EDAFE671F29DB4400368058 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
