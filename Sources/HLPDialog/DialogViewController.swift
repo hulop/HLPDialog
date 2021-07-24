@@ -660,6 +660,11 @@ open class DialogViewController: UIViewController, UITableViewDelegate, UITableV
                         if case let JSON.string(from)? = dest_info["from"] {
                             info["fromID"] = from
                         }
+                        for entry in dest_info {
+                            if case let JSON.string(value) = entry.value {
+                                info[entry.key] = value
+                            }
+                        }
                         if cc.additionalProperties["use_stair"] != nil {
                             if case let JSON.boolean(use_stair)? = cc.additionalProperties["use_stair"] {
                                 info["use_stair"] = use_stair
