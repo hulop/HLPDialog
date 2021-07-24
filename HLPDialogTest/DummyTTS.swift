@@ -25,6 +25,8 @@ import HLPDialog
 import AVFoundation
 
 class DummyTTS: NSObject, TTSProtocol, AVSpeechSynthesizerDelegate {
+    static let shared = DummyTTS()
+
     var map: [String: ()->Void] = [:]
     let synthe = AVSpeechSynthesizer()
 
@@ -49,10 +51,11 @@ class DummyTTS: NSObject, TTSProtocol, AVSpeechSynthesizerDelegate {
     }
     
     func stop() {
-        
+        synthe.stopSpeaking(at: .word)
     }
+
     func stop(_ immediate: Bool) {
-        
+        synthe.stopSpeaking(at: .immediate)
     }
     
     func vibrate() {

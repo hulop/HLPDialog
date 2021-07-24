@@ -106,7 +106,7 @@ class ViewController: UIViewController, DialogViewDelegate {
 
     func dialogViewTapped() {
         let dialogView = DialogViewControllerLocal()
-        dialogView.tts = DummyTTS()
+        dialogView.tts = DummyTTS.shared
         dialogView.baseHelper = self.dialogHelper
         dialogView.scriptURL = Bundle.main.url(forResource: "conv", withExtension: "js")
         self.navigationController?.pushViewController(dialogView, animated: true)

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021  Carnegie Mellon University
+ * Copyright (c) 2021  IBM Corporation, Carnegie Mellon University and others
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,6 +38,7 @@ class JSHelper {
             script = try String(contentsOf: jsFile, encoding: .utf8)
 
             // JavaScript syntax check
+            weak var weakself = self
             ctx.exceptionHandler = { context, value in
                 let lineNumber:Int = Int(value!.objectForKeyedSubscript("line")!.toInt32())
                 guard lineNumber > 0 else { return }
@@ -45,7 +46,9 @@ class JSHelper {
                 NSLog("JS ERROR: \(value!) \(moreInfo)")
                 let start = max(lineNumber-2, 0)
                 for i in (start)..<lineNumber {
-                    NSLog("L%-4d %s", i+1, String(self.script.split(separator: "\n", omittingEmptySubsequences:false)[i]))
+                    if let ws = weakself {
+                        NSLog("L%-4d %s", i+1, String(ws.script.split(separator: "\n", omittingEmptySubsequences:false)[i]))
+                    }
                 }
                 exit(0)
             }
