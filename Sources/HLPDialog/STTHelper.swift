@@ -124,7 +124,6 @@ open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SF
 
     fileprivate func stopPWCaptureSession(){
         pwCapturingIgnore = true
-        //self.pwCaptureSession?.stopRunning()
     }
 
     open func captureOutput(_ captureOutput: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
@@ -359,7 +358,7 @@ open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SF
         self.tts?.stop()
         self.speaking = false
         self.recognizing = false
-        self.stopPWCaptureSession()
+        self.pwCaptureSession?.stopRunning()
         self.stopstt()
         self.stoptimer()
     }

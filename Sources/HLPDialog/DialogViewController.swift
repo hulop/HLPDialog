@@ -57,20 +57,19 @@ open class DialogViewController: UIViewController, UITableViewDelegate, UITableV
         notificationCenter.removeObserver(self)
         DialogManager.sharedManager().isAvailable = true
     }
+    fileprivate var initialized:Bool = false
     open var tts:TTSProtocol? = nil
     open var baseHelper:DialogViewHelper? = nil
-    
+    open var root: UIViewController? = nil
+
     var imageView: UIImageView? = nil
     var tableView: UITableView? = nil
     var controlView: ControlView? = nil
     var conversation_id:String? = nil
     var client_id:Int? = nil
-    open var root: UIViewController? = nil
-    //let tintColor: UIColor = UIColor(red: 0, green: 0.478431, blue: 1, alpha: 1)
     var isDeveloperMode: Bool = false
 
-    
-    fileprivate var _stt:STTHelper? = nil
+    fileprivate var stt:STTHelper? = nil
     
     let conv_devicetype:String = UIDevice.current.systemName + "_" + UIDevice.current.systemVersion
     let conv_deviceid:String = (UIDevice.current.identifierForVendor?.uuidString)!
@@ -79,7 +78,7 @@ open class DialogViewController: UIViewController, UITableViewDelegate, UITableV
     var conv_api_key:String? = nil
     var conv_client_id:String? = nil
     let conv_navigation_url = "navcog3://start_navigation/"
-    let conv_context_local:LocalContext = LocalContext()
+    let localContext:LocalContext = LocalContext()
     var conv_started = false
     
     let defbackgroundColor:UIColor = UIColor(red: CGFloat(221/255.0), green: CGFloat(222/255.0), blue: CGFloat(224/255.0), alpha:1.0)
@@ -93,79 +92,204 @@ open class DialogViewController: UIViewController, UITableViewDelegate, UITableV
     
     open var dialogViewHelper: DialogViewHelper = DialogViewHelper()
     var cancellable = false
-    
-    
-    /*
-    let ttslock:NSLock = NSLock()
-    fileprivate func getTts() -> TTSProtocol{
-        self.ttslock.lock()
-        defer{self.ttslock.unlock()}
-        if let tts = self.tts{
-            return tts
-        }else{
-            self.tts = DefaultTTS()
-            return self.tts!
-        }
-    }
-    */
-    
-    let sttlock:NSLock = NSLock()
-    fileprivate func getStt() -> STTHelper{
-        self.sttlock.lock()
-        defer{self.sttlock.unlock()}
-        if let stt = self._stt{
-            return stt
-        }else{
-            self._stt = STTHelper()
-            self._stt!.tts = self.tts;
-            self._stt!.prepare()
-            self._stt!.useRawError = self.isDeveloperMode
-            return self._stt!
-        }
-    }
-    internal func startConversation(){
-        self.initConversationConfig()//override with local setting
-        self.conv_context_local.verifyPrivacy()
-    }
+
+    // MARK: UIViewController
+
     override open func viewDidLoad() {
         super.viewDidLoad()
-        print(Date(), #function, #line)
-        self.conv_context_local.delegate = self
-        _ = self.getStt()
-        self.conv_context = nil
-        self.tableData = []
-        
-        let nc = NotificationCenter.default
-        nc.addObserver(self, selector: #selector(pauseConversation), name: DialogManager.REQUEST_DIALOG_PAUSE, object: nil)
-        nc.addObserver(self, selector: #selector(requestDialogEnd), name: DialogManager.REQUEST_DIALOG_END, object: nil)
-        nc.addObserver(self, selector: #selector(requestDialogAction), name: DialogManager.REQUEST_DIALOG_ACTION, object: nil)
+        initDialogViewController()
+    }
+
+    override public func viewDidLayoutSubviews() {
+        self.resizeTableView()
 
     }
-    
-    internal func updateView() {
+
+    // TODO: needed?
+    func updateView() {
     }
 
     override public func viewWillAppear(_ animated: Bool) {
-        self.updateView()
+        updateView()
     }
-    
+
     override public func viewDidAppear(_ animated: Bool) {
-        print(Date(), #function, #line)
+        self.initDialogViewController()
 
         let delay = UIAccessibility.isVoiceOverRunning ? 2.0 : 1.0
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+            self.initConversationConfig()
 
-            self.restartConversation()
+            // check microphone and speech recognition authorization
+            // LocalContext will call onContextChange if those are authorized
+            self.localContext.verifyPrivacy()
             DialogManager.sharedManager().isActive = true
         }
     }
-    
+
     override public func viewWillDisappear(_ animated: Bool) {
-        resetConversation()
+        resetDialogViewController()
         DialogManager.sharedManager().isActive = false
-        self.updateView()
+        updateView()
     }
-    
+
+    override public func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+
+    // MARK: private functions
+
+    fileprivate func initDialogViewController() {
+        if initialized { return }
+        initialized = true
+
+        self.localContext.delegate = self
+
+        let stt = STTHelper()
+        stt.tts = self.tts
+        stt.useRawError = self.isDeveloperMode
+        stt.prepare()
+        self.stt = stt
+
+        self.conv_started = false
+        self.conv_context = nil
+        self.tableData = []
+
+        let nc = NotificationCenter.default
+        nc.addObserver(self, selector: #selector(requestDialogEnd), name: DialogManager.REQUEST_DIALOG_END, object: nil)
+        nc.addObserver(self, selector: #selector(requestDialogAction), name: DialogManager.REQUEST_DIALOG_ACTION, object: nil)
+        nc.addObserver(self, selector: #selector(pauseConversation), name: DialogManager.REQUEST_DIALOG_PAUSE, object: nil)
+
+        // init dialog view
+        self.view.backgroundColor = defbackgroundColor
+        if(nil == self.tableView){
+            // chat messages
+            self.tableView = NoVoiceTableView()
+            self.tableView!.register(CustomLeftTableViewCell.self, forCellReuseIdentifier: "CustomLeftTableViewCell")
+            self.tableView!.register(CustomRightTableViewCell.self, forCellReuseIdentifier: "CustomRightTableViewCell")
+            self.tableView!.register(CustomLeftTableViewCellSpeaking.self, forCellReuseIdentifier: "CustomLeftTableViewCellSpeaking")
+            self.tableView!.delegate = self
+            self.tableView!.dataSource = self
+            self.tableView!.separatorColor = UIColor.clear
+            self.tableView?.backgroundColor = defbackgroundColor
+            //        self.tableView!.layer.zPosition = -1
+
+            // mic button and dictated text label
+            self.controlView = ControlView()
+            self.controlView!.delegate = self
+            self.controlView!.frame = self.view!.frame
+            // show mic button on controlView
+            let pos = CGPoint(x: self.view.bounds.width/2, y: self.view.bounds.height - 120)
+            if let dh = baseHelper {
+                dialogViewHelper.mainColor = dh.mainColor
+                dialogViewHelper.subColor = dh.subColor
+                dialogViewHelper.backgroundColor = dh.backgroundColor
+            }
+            dialogViewHelper.setup(self.controlView!, position:pos, tapEnabled: true)
+            dialogViewHelper.delegate = self
+
+            // add controlView first
+            self.view.addSubview(controlView!)
+            self.view.addSubview(tableView!)
+        }
+
+        self.resizeTableView()
+    }
+
+    fileprivate func resizeTableView(){
+        if(nil == self.tableView){
+            return
+        }
+
+        let statusBarHeight: CGFloat = UIApplication.shared.statusBarFrame.height + 40
+        let txheight = self.dialogViewHelper.helperView.bounds.height + self.dialogViewHelper.label.bounds.height
+
+        let displayWidth: CGFloat = self.view.frame.width
+        let displayHeight: CGFloat = self.view.frame.height
+        self.tableView!.frame = CGRect(x:0, y:statusBarHeight, width:displayWidth, height:displayHeight - statusBarHeight - txheight)
+    }
+
+    fileprivate func resetDialogViewController(){
+        DialogManager.sharedManager().isAvailable = false
+        stt?.disconnect()
+        stt?.delegate = nil
+        stt = nil
+        tts = nil
+        self.localContext.delegate = nil
+        self.conv_context = nil
+        self.tableData = []
+
+        // deinit view
+        if let tableview = self.tableView{
+            tableview.removeFromSuperview()
+            self.tableView!.delegate = self
+            self.tableView!.dataSource = self
+            self.tableView = nil
+        }
+        self.dialogViewHelper.reset()
+        self.dialogViewHelper.removeFromSuperview()
+        self.dialogViewHelper.delegate = nil
+
+        initialized = false
+    }
+
+    fileprivate func initConversationConfig(){
+        if let defs = DialogManager.sharedManager().config {
+            let server = defs["conv_server"]
+            if let _server = server as? String {
+                if !_server.isEmpty {
+                    self.conv_server = _server
+                }
+            }
+            let key = defs["conv_api_key"]
+            if let _key = key as? String {
+                if !_key.isEmpty {
+                    self.conv_api_key = _key
+                }
+            }
+            let str = defs["conv_client_id"]
+            if let _str = str as? String {
+                if  !_str.isEmpty {
+                    self.conv_client_id = _str
+                }
+            }
+        }
+    }
+
+    fileprivate func refreshTableView(_ dontscroll:Bool? = false){
+        if(nil == self.tableView){
+            return
+        }
+        DispatchQueue.main.async(execute: { [weak self] in
+            if let weakself = self {
+                weakself.tableView?.reloadData()
+                if !dontscroll!{
+                    DispatchQueue.main.async(execute: {
+                        if(nil == weakself.tableView){
+                            return
+                        }
+                        let nos = weakself.tableView!.numberOfSections
+                        let nor = weakself.tableView!.numberOfRows(inSection: nos-1)
+                        if nor > 0{
+                            let lastPath:IndexPath = IndexPath(row:nor-1, section:nos-1)
+                            weakself.tableView!.scrollToRow( at: lastPath , at: .bottom, animated: false)
+                        }
+                    })
+                }
+            }
+        })
+    }
+
+    // MARK: LocalContextDelegate
+
+    public func onContextChange(_ context:LocalContext){
+        if !self.conv_started{
+            self.conv_started = true
+            self.sendMessage("")
+        }
+    }
+
     public func showNoSpeechRecoAlert() {
         let bundle = Bundle.module
         
@@ -219,6 +343,8 @@ open class DialogViewController: UIViewController, UITableViewDelegate, UITableV
         self.tableData.append(["name": NSLocalizedString("Error", tableName: nil, bundle: bundle, value: "", comment:"") as AnyObject, "type": 1 as AnyObject,  "image": "conversation.png" as AnyObject, "message": message as AnyObject])
         self.refreshTableView()
     }
+
+    // MARK: observer callbacks
     
     @objc internal func requestDialogEnd() {
         if cancellable {
@@ -231,42 +357,14 @@ open class DialogViewController: UIViewController, UITableViewDelegate, UITableV
     @objc internal func requestDialogAction() {
         self.dialogViewTapped()
     }
-    
-    internal func resetConversation(){
-        DialogManager.sharedManager().isAvailable = false
-        self.getStt().disconnect()
-        _stt?.delegate = nil
-        _stt = nil
-        tts = nil
-        self.conv_context_local.delegate = nil
-        self.conv_context = nil
-        self.tableData = []
-        if let tableview = self.tableView{
-            tableview.removeFromSuperview()
-            self.tableView!.delegate = self
-            self.tableView!.dataSource = self
-            self.tableView = nil
-        }
-        self.dialogViewHelper.reset()
-        self.dialogViewHelper.removeFromSuperview()
-        self.dialogViewHelper.delegate = nil
-    }
-    
-    internal func restartConversation(){
-        print("restartConversation");
-        DispatchQueue.main.async {
-            self.conv_context_local.delegate = self
-            self.getStt().prepare()
-            self.initDialogView()
-            self.conv_started = false
-            self.startConversation()
-        }
-    }
+
     
     @objc internal func pauseConversation() {
+        guard let stt = self.stt else {
+            return
+        }
         let bundle = Bundle.module
         
-        let stt = self.getStt()
         if (stt.recognizing) {
             print("pause stt")
             stt.endRecognize()
@@ -281,118 +379,13 @@ open class DialogViewController: UIViewController, UITableViewDelegate, UITableV
             stt.delegate?.inactive()
         }
     }
-    
-    public func onContextChange(_ context:LocalContext){
-        if !self.conv_started{
-            self.conv_started = true
-            self.sendMessage("")
-        }
-    }
-    
-    fileprivate func initConversationConfig(){
-        if let defs = DialogManager.sharedManager().config {
-            let server = defs["conv_server"]
-            if let _server = server as? String {
-                if !_server.isEmpty {
-                    self.conv_server = _server
-                }
-            }
-            let key = defs["conv_api_key"]
-            if let _key = key as? String {
-                if !_key.isEmpty {
-                    self.conv_api_key = _key
-                }
-            }
-            let str = defs["conv_client_id"]
-            if let _str = str as? String {
-                if  !_str.isEmpty {
-                    self.conv_client_id = _str
-                }
-            }
-        }
-    }
 
-    class NoVoiceTableView: UITableView {
-        override var accessibilityElementsHidden: Bool {
-            set {}
-            get { return true }
-        }
-    }
-    
-    class ControlView: UIView {
-        weak var delegate:ControlViewDelegate?
-        override var isAccessibilityElement: Bool {
-            set {}
-            get { return true }
-        }
-        override var accessibilityLabel: String? {
-            set {}
-            get {
-                return NSLocalizedString("DialogStart", tableName: nil, bundle: Bundle.module, value: "", comment: "")
-            }
-        }
-        override var accessibilityHint: String? {
-            set {}
-            get {
-                return NSLocalizedString("DialogStartHint", tableName: nil, bundle: Bundle.module, value: "", comment: "")
-            }
-        }
-        override var accessibilityTraits: UIAccessibilityTraits {
-            set {}
-            get {
-                return UIAccessibilityTraits.button
-            }
-        }
-        override func accessibilityElementDidBecomeFocused() {
-            if delegate != nil {
-                delegate!.elementFocusedByVoiceOver()
-            }
-        }
-        override func accessibilityActivate() -> Bool {
-            if delegate != nil {
-                delegate!.actionPerformedByVoiceOver()
-            }
-            return true
-        }
-    }
-    fileprivate func initDialogView(){
-        self.view.backgroundColor = defbackgroundColor
-       if(nil == self.tableView){
-            // chat messages
-            self.tableView = NoVoiceTableView()
-            self.tableView!.register(CustomLeftTableViewCell.self, forCellReuseIdentifier: "CustomLeftTableViewCell")
-            self.tableView!.register(CustomRightTableViewCell.self, forCellReuseIdentifier: "CustomRightTableViewCell")
-            self.tableView!.register(CustomLeftTableViewCellSpeaking.self, forCellReuseIdentifier: "CustomLeftTableViewCellSpeaking")
-            self.tableView!.delegate = self
-            self.tableView!.dataSource = self
-            self.tableView!.separatorColor = UIColor.clear
-            self.tableView?.backgroundColor = defbackgroundColor
-            //        self.tableView!.layer.zPosition = -1
-            
-            // mic button and dictated text label
-            self.controlView = ControlView()
-            self.controlView!.delegate = self
-            self.controlView!.frame = self.view!.frame
-            // show mic button on controlView
-            let pos = CGPoint(x: self.view.bounds.width/2, y: self.view.bounds.height - 120)
-            if let dh = baseHelper {
-                dialogViewHelper.mainColor = dh.mainColor
-                dialogViewHelper.subColor = dh.subColor
-                dialogViewHelper.backgroundColor = dh.backgroundColor
-            }
-            dialogViewHelper.setup(self.controlView!, position:pos, tapEnabled: true)
-            dialogViewHelper.delegate = self
-            
-            // add controlView first
-            self.view.addSubview(controlView!)
-            self.view.addSubview(tableView!)
-        }
-        
-        self.resizeTableView()
-    }
+    // MARK: ControlViewDelegate
+
     func elementFocusedByVoiceOver() {
-        let stt = self.getStt()
-
+        guard let stt = self.stt else {
+            return
+        }
         stt.tts?.stop(false)
         stt.disconnect()
         if !stt.paused {
@@ -403,9 +396,12 @@ open class DialogViewController: UIViewController, UITableViewDelegate, UITableV
         stt.delegate?.showText(NSLocalizedString("PAUSING", tableName: nil, bundle: Bundle.module, value: "", comment:"Pausing"));
         stt.delegate?.inactive()
     }
+
     func actionPerformedByVoiceOver() {
-        let stt = self.getStt()
-        if(stt.paused){
+        guard let stt = self.stt else {
+            return
+        }
+        if (stt.paused) {
             print("restart stt")
             stt.restartRecognize()
             stt.delegate?.showText(NSLocalizedString("SPEAK_NOW", tableName: nil, bundle: Bundle.module, value: "", comment:"Speak Now!"));
@@ -413,34 +409,41 @@ open class DialogViewController: UIViewController, UITableViewDelegate, UITableV
             UIAccessibility.post(notification: UIAccessibility.Notification.screenChanged, argument: self.navigationItem.leftBarButtonItem)
         }
     }
-    
-    fileprivate func resizeTableView(){
-        if(nil == self.tableView){
+
+    // MARK: DialogViewDelegate
+    public func dialogViewTapped() {
+        guard let stt = self.stt else {
             return
         }
+        let bundle = Bundle.module
 
-        let statusBarHeight: CGFloat = UIApplication.shared.statusBarFrame.height + 40
-        let txheight = self.dialogViewHelper.helperView.bounds.height + self.dialogViewHelper.label.bounds.height
-        
-        let displayWidth: CGFloat = self.view.frame.width
-        let displayHeight: CGFloat = self.view.frame.height
-        self.tableView!.frame = CGRect(x:0, y:statusBarHeight, width:displayWidth, height:displayHeight - statusBarHeight - txheight)
+        if (stt.recognizing) {
+            print("pause stt")
+            stt.endRecognize()
+            stt.paused = true
+            stt.delegate?.showText(NSLocalizedString("PAUSING", tableName: nil, bundle: bundle, value: "", comment:"Pausing"));
+            stt.delegate?.inactive()
+            //NavSound.sharedInstance().playVoiceRecoPause()
+        } else if(stt.speaking) {
+            print("stop tts")
+            stt.tts?.stop() // do not use "true" flag beacus it causes no-speaking problem.
+            stt.delegate?.showText(NSLocalizedString("PAUSING", tableName: nil, bundle: bundle, value: "", comment:"Pausing"));
+            stt.delegate?.inactive()
+        } else if(stt.paused){
+            print("restart stt")
+            stt.restartRecognize()
+            stt.delegate?.showText(NSLocalizedString("SPEAK_NOW", tableName: nil, bundle: bundle, value: "", comment:"Speak Now!"));
+            stt.delegate?.listen()
+        } else if(stt.restarting) {
+            print("stt is restarting")
+            // noop
+        } else {
+            stt.tts?.stop(false)
+            stt.delegate?.inactive()
+        }
     }
-    fileprivate func initImageView(){
-        let image1:UIImage? = UIImage(named:"Dashboard.PNG")
-        
-        self.imageView = UIImageView(frame:self.view.bounds)
-        self.imageView!.image = image1
-        
-        self.view.addSubview(self.imageView!)
-    }
-    fileprivate func removeImageView(){
-        self.imageView?.removeFromSuperview()
-    }
-    override public func viewDidLayoutSubviews() {
-        self.resizeTableView()
+    // MARK: UITableViewDelegate
 
-    }
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
         if self.tableData.count <= indexPath.row {
@@ -457,6 +460,7 @@ open class DialogViewController: UIViewController, UITableViewDelegate, UITableV
             return self.heightLeftCell.setData(tableView.frame.size.width - 20, data: self.tableData[indexPath.row])
         }
     }
+
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         var type:Int = 1
@@ -494,72 +498,80 @@ open class DialogViewController: UIViewController, UITableViewDelegate, UITableV
             return cell
         }
     }
+
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tableData.count
     }
+
     public func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
+
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     }
-    override public func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    internal func refreshTableView(_ dontscroll:Bool? = false){
-        if(nil == self.tableView){
-            return
+
+    // MARK: views
+
+    class NoVoiceTableView: UITableView {
+        override var accessibilityElementsHidden: Bool {
+            set {}
+            get { return true }
         }
-        DispatchQueue.main.async(execute: { [weak self] in
-            if let weakself = self {
-                weakself.tableView?.reloadData()
-                if !dontscroll!{
-                    DispatchQueue.main.async(execute: {
-                        if(nil == weakself.tableView){
-                            return
-                        }
-                        let nos = weakself.tableView!.numberOfSections
-                        let nor = weakself.tableView!.numberOfRows(inSection: nos-1)
-                        if nor > 0{
-                            let lastPath:IndexPath = IndexPath(row:nor-1, section:nos-1)
-                            weakself.tableView!.scrollToRow( at: lastPath , at: .bottom, animated: false)
-                        }
-                    })
-                }
+    }
+
+    class ControlView: UIView {
+        weak var delegate:ControlViewDelegate?
+        override var isAccessibilityElement: Bool {
+            set {}
+            get { return true }
+        }
+        override var accessibilityLabel: String? {
+            set {}
+            get {
+                return NSLocalizedString("DialogStart", tableName: nil, bundle: Bundle.module, value: "", comment: "")
             }
-        })
-    }
-    
-    public func dialogViewTapped() {
-        let bundle = Bundle.module
-        
-        let stt = self.getStt()
-        if (stt.recognizing) {
-            print("pause stt")
-            stt.endRecognize()
-            stt.paused = true
-            stt.delegate?.showText(NSLocalizedString("PAUSING", tableName: nil, bundle: bundle, value: "", comment:"Pausing"));
-            stt.delegate?.inactive()
-            //NavSound.sharedInstance().playVoiceRecoPause()
-        } else if(stt.speaking) {
-            print("stop tts")
-            stt.tts?.stop() // do not use "true" flag beacus it causes no-speaking problem.
-            stt.delegate?.showText(NSLocalizedString("PAUSING", tableName: nil, bundle: bundle, value: "", comment:"Pausing"));
-            stt.delegate?.inactive()
-        } else if(stt.paused){
-            print("restart stt")
-            stt.restartRecognize()
-            stt.delegate?.showText(NSLocalizedString("SPEAK_NOW", tableName: nil, bundle: bundle, value: "", comment:"Speak Now!"));
-            stt.delegate?.listen()
-        } else if(stt.restarting) {
-            print("stt is restarting")
-            // noop
-        } else {
-            stt.tts?.stop(false)
-            stt.delegate?.inactive()
+        }
+        override var accessibilityHint: String? {
+            set {}
+            get {
+                return NSLocalizedString("DialogStartHint", tableName: nil, bundle: Bundle.module, value: "", comment: "")
+            }
+        }
+        override var accessibilityTraits: UIAccessibilityTraits {
+            set {}
+            get {
+                return UIAccessibilityTraits.button
+            }
+        }
+        override func accessibilityElementDidBecomeFocused() {
+            if delegate != nil {
+                delegate!.elementFocusedByVoiceOver()
+            }
+        }
+        override func accessibilityActivate() -> Bool {
+            if delegate != nil {
+                delegate!.actionPerformedByVoiceOver()
+            }
+            return true
         }
     }
-    
+
+    fileprivate func initImageView(){
+        let image1:UIImage? = UIImage(named:"Dashboard.PNG")
+
+        self.imageView = UIImageView(frame:self.view.bounds)
+        self.imageView!.image = image1
+
+        self.view.addSubview(self.imageView!)
+    }
+
+    fileprivate func removeImageView(){
+        self.imageView?.removeFromSuperview()
+    }
+
+
+    // MARK: dialog methods
+
     internal func matches(_ txt: String, pattern:String)->[[String]]{
         let nsstr = txt as NSString
         var ret:[[String]] = []
@@ -577,16 +589,12 @@ open class DialogViewController: UIViewController, UITableViewDelegate, UITableV
         }
         return ret
     }
-    
-    internal func _setTimeout(_ delay:TimeInterval, block:@escaping ()->Void) -> Timer {
-        return Timer.scheduledTimer(timeInterval: delay, target: BlockOperation(block: block), selector: #selector(Operation.main), userInfo: nil, repeats: false)
-    }
 
     var inflight:Timer? = nil
     var agent_name = ""
     var lastresponse:MessageResponse? = nil
     internal func newresponse(_ orgres: MessageResponse?) {
-        conv_context_local.welcome_shown()
+        localContext.welcome_shown()
         DispatchQueue.main.async(execute: { [weak self] in
             if let weakself = self {
                 weakself.cancellable = true
@@ -725,6 +733,7 @@ open class DialogViewController: UIViewController, UITableViewDelegate, UITableV
             }
         })
     }
+
     internal func newmessage(_ msg:String){
         self.tableData.append(["name":"myself" as AnyObject, "type": 2 as AnyObject,
             "message":msg as AnyObject ])
@@ -783,7 +792,7 @@ open class DialogViewController: UIViewController, UITableViewDelegate, UITableV
 
         let conversation = self.getConversation(pre:pre)//ConversationEx()
         if var context = self.conv_context {
-            self.conv_context_local.getContext().forEach({ (arg) in
+            self.localContext.getContext().forEach({ (arg) in
                 let (key, value) = arg
                 context.additionalProperties[key] = value
             })
@@ -808,7 +817,7 @@ open class DialogViewController: UIViewController, UITableViewDelegate, UITableV
                 }
             }
         } else {
-            let initial_context = Context(conversationID: nil, system: nil, additionalProperties: self.conv_context_local.getContext())
+            let initial_context = Context(conversationID: nil, system: nil, additionalProperties: self.localContext.getContext())
             conversation.message(msg, server: self.conv_server!, api_key: self.conv_api_key!, client_id: self.conv_client_id, context: initial_context) { [weak self] (response, error) in
                 if let weakself = self {
                     if let error = error {
@@ -824,25 +833,32 @@ open class DialogViewController: UIViewController, UITableViewDelegate, UITableV
             }
         }
     }
+
     internal func endspeak(_ rsp:String?){
         if self.inflight != nil{
             self.inflight?.invalidate()
             self.inflight = nil
         }
     }
+
     func suspendDialog() {
-        let stt = self.getStt()
+        guard let stt = self.stt else {
+            return
+        }
         stt.endRecognize()
         stt.disconnect()
     }
+
     func dummy(_ msg:String){
         //nop
     }
 
     func headupDialog(_ speech: String?) {
-        let stt:STTHelper = self.getStt()
+        guard let stt = self.stt else {
+            return
+        }
+
         stt.endRecognize()
-        stt.prepare()
         if speech != nil {
             stt.listen([([".*"], {[weak self] (str, dur) in
                 if let weakself = self {
@@ -869,9 +885,13 @@ open class DialogViewController: UIViewController, UITableViewDelegate, UITableV
             }
         }
     }
+
     var _lastspeech:String? = nil
     func startDialog(_ response:String) {
-        let stt:STTHelper = self.getStt()
+        guard let stt = self.stt else {
+            return
+        }
+
         stt.endRecognize()
         stt.delegate = self.dialogViewHelper
         self._lastspeech = response
@@ -915,14 +935,18 @@ open class DialogViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func endDialog(_ response:String){
-        let stt:STTHelper = self.getStt()
+        guard let stt = self.stt else {
+            return
+        }
         stt.endRecognize()
         stt.delegate = self.dialogViewHelper
         self._lastspeech = response
     }
     
     func failDialog() {
-        let stt:STTHelper = self.getStt()
+        guard let stt = self.stt else {
+            return
+        }
         stt.endRecognize()
         stt.paused = true
         stt.delegate?.showText(NSLocalizedString("PAUSING", tableName: nil, bundle: Bundle.module, value: "", comment:"Pausing"));
@@ -969,7 +993,9 @@ open class DialogViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func justSpeech(_ response: String){
-        let stt:STTHelper = self.getStt()
+        guard let stt = self.stt else {
+            return
+        }
         stt.endRecognize()
         stt.delegate = self.dialogViewHelper
         

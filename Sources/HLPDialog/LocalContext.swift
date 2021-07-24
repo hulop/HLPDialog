@@ -81,7 +81,7 @@ open class LocalContext: NSObject{
     }
     
     fileprivate func notify_delegate_as_needed(){
-        if let del = self.delegate{
+        if let del = self.delegate {
             del.onContextChange(self)
         }
     }
