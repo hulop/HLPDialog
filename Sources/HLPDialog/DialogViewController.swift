@@ -387,7 +387,7 @@ open class DialogViewController: UIViewController, UITableViewDelegate, UITableV
             return
         }
         stt.tts?.stop(false)
-        stt.disconnect()
+        stt.endRecognize()
         if !stt.paused {
             self.tts?.vibrate()
             self.tts?.playVoiceRecoStart()
