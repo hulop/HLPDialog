@@ -239,7 +239,7 @@ open class STTHelper: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, SF
                     weakself.endRecognize();
                     weakself.delegate?.recognize()
                     timeout()
-                } else if code == 209 || code == 216 || code == 1700 {
+                } else if code == 209 || code == 216 || code == 1700 || code == 301 {
                     // noop
                     // 209 : trying to stop while starting
                     // 216 : terminated by manual
