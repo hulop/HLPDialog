@@ -18,11 +18,9 @@
 		7EDAFE7C1F29E0DA00368058 /* DummyTTS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDAFE7B1F29E0DA00368058 /* DummyTTS.swift */; };
 		7EDAFE7F1F29E63100368058 /* Speech.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD95911F21DD0C00A00D5D /* Speech.framework */; };
 		7EDAFE821F29E65500368058 /* RestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD95891F21DBE100A00D5D /* RestKit.framework */; };
-		7EDAFE831F29E65500368058 /* RestKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD95891F21DBE100A00D5D /* RestKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A9791D8E1F90A7FB00631165 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9791D8D1F90A7FB00631165 /* AVFoundation.framework */; };
 		A9C39A2921BA247200EF5F5D /* AssistantV1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9C39A2821BA247200EF5F5D /* AssistantV1.framework */; };
 		A9C39A2A21BA256A00EF5F5D /* AssistantV1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9C39A2821BA247200EF5F5D /* AssistantV1.framework */; };
-		A9C39A2D21BA2FBA00EF5F5D /* AssistantV1.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9C39A2821BA247200EF5F5D /* AssistantV1.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A9CD958A1F21DBE100A00D5D /* RestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD95891F21DBE100A00D5D /* RestKit.framework */; };
 		A9CD958E1F21DCFA00A00D5D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD958D1F21DCFA00A00D5D /* Foundation.framework */; };
 		A9CD95901F21DD0200A00D5D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD958F1F21DD0200A00D5D /* UIKit.framework */; };
@@ -57,9 +55,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A9C39A2D21BA2FBA00EF5F5D /* AssistantV1.framework in Embed Frameworks */,
 				7EDAFE771F29DB5300368058 /* HLPDialog.framework in Embed Frameworks */,
-				7EDAFE831F29E65500368058 /* RestKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -67,6 +63,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		30548D2627FB8BA500626F07 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		30548D2827FB8BD400626F07 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		7E1BE48D1F25C99600FF17BD /* DialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogViewController.swift; sourceTree = "<group>"; };
 		7EDAFE641F29DB4400368058 /* HLPDialogTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HLPDialogTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EDAFE661F29DB4400368058 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -229,6 +227,7 @@
 				7EDAFE611F29DB4400368058 /* Frameworks */,
 				7EDAFE621F29DB4400368058 /* Resources */,
 				7EDAFE7A1F29DB5400368058 /* Embed Frameworks */,
+				30548D2B27FB8C8D00626F07 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -326,6 +325,25 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		30548D2B27FB8C8D00626F07 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/AssistantV1.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RestKit.framework",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage copy-frameworks\n";
+		};
 		A9CD95871F21DA9800A00D5D /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -386,6 +404,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				7EDAFE6B1F29DB4400368058 /* Base */,
+				30548D2627FB8BA500626F07 /* en */,
+				30548D2827FB8BD400626F07 /* ja */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
