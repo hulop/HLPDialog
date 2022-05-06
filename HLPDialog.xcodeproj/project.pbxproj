@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,17 +13,9 @@
 		7EDAFE6C1F29DB4400368058 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EDAFE6A1F29DB4400368058 /* Main.storyboard */; };
 		7EDAFE6E1F29DB4400368058 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7EDAFE6D1F29DB4400368058 /* Assets.xcassets */; };
 		7EDAFE711F29DB4400368058 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EDAFE6F1F29DB4400368058 /* LaunchScreen.storyboard */; };
-		7EDAFE761F29DB5300368058 /* HLPDialog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD957C1F21D5DE00A00D5D /* HLPDialog.framework */; };
-		7EDAFE771F29DB5300368058 /* HLPDialog.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD957C1F21D5DE00A00D5D /* HLPDialog.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7EDAFE7C1F29E0DA00368058 /* DummyTTS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDAFE7B1F29E0DA00368058 /* DummyTTS.swift */; };
 		7EDAFE7F1F29E63100368058 /* Speech.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD95911F21DD0C00A00D5D /* Speech.framework */; };
-		7EDAFE821F29E65500368058 /* RestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD95891F21DBE100A00D5D /* RestKit.framework */; };
-		7EDAFE831F29E65500368058 /* RestKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD95891F21DBE100A00D5D /* RestKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A9791D8E1F90A7FB00631165 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9791D8D1F90A7FB00631165 /* AVFoundation.framework */; };
-		A9C39A2921BA247200EF5F5D /* AssistantV1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9C39A2821BA247200EF5F5D /* AssistantV1.framework */; };
-		A9C39A2A21BA256A00EF5F5D /* AssistantV1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9C39A2821BA247200EF5F5D /* AssistantV1.framework */; };
-		A9C39A2D21BA2FBA00EF5F5D /* AssistantV1.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9C39A2821BA247200EF5F5D /* AssistantV1.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		A9CD958A1F21DBE100A00D5D /* RestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD95891F21DBE100A00D5D /* RestKit.framework */; };
 		A9CD958E1F21DCFA00A00D5D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD958D1F21DCFA00A00D5D /* Foundation.framework */; };
 		A9CD95901F21DD0200A00D5D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD958F1F21DD0200A00D5D /* UIKit.framework */; };
 		A9CD95921F21DD0C00A00D5D /* Speech.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD95911F21DD0C00A00D5D /* Speech.framework */; };
@@ -38,10 +30,15 @@
 		A9CD95B01F21DEBE00A00D5D /* STTHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CD95AB1F21DEBE00A00D5D /* STTHelper.swift */; };
 		A9CD95B11F21DEBE00A00D5D /* TextToSpeech.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CD95AC1F21DEBE00A00D5D /* TextToSpeech.swift */; };
 		A9EF78011F2F0B9000AC72D8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A9EF78031F2F0B9000AC72D8 /* Localizable.strings */; };
+		C316801741108B42476A2860 /* Pods_HLPDialog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E28C478F2813225C00DA1AFE /* Pods_HLPDialog.framework */; };
+		CF2CD153193713DE95AF1A3A /* Pods_HLPDialogTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8F9B2B2D7C8FA0403EB9254 /* Pods_HLPDialogTest.framework */; };
+		E28C478428131EF700DA1AFE /* AssistantV1 in Frameworks */ = {isa = PBXBuildFile; productRef = E28C478328131EF700DA1AFE /* AssistantV1 */; };
+		E28C479F2814752A00DA1AFE /* AssistantV1 in Frameworks */ = {isa = PBXBuildFile; productRef = E28C479E2814752A00DA1AFE /* AssistantV1 */; };
+		E28C47A3281478AF00DA1AFE /* HLPDialog.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9CD957C1F21D5DE00A00D5D /* HLPDialog.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		7EDAFE781F29DB5300368058 /* PBXContainerItemProxy */ = {
+		E28C47A4281478AF00DA1AFE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A9CD95731F21D5DE00A00D5D /* Project object */;
 			proxyType = 1;
@@ -51,15 +48,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		7EDAFE7A1F29DB5400368058 /* Embed Frameworks */ = {
+		E28C47A6281478AF00DA1AFE /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A9C39A2D21BA2FBA00EF5F5D /* AssistantV1.framework in Embed Frameworks */,
-				7EDAFE771F29DB5300368058 /* HLPDialog.framework in Embed Frameworks */,
-				7EDAFE831F29E65500368058 /* RestKit.framework in Embed Frameworks */,
+				E28C47A3281478AF00DA1AFE /* HLPDialog.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -67,6 +62,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2309FB393A849FC828FC95AD /* Pods-HLPDialog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HLPDialog.release.xcconfig"; path = "Target Support Files/Pods-HLPDialog/Pods-HLPDialog.release.xcconfig"; sourceTree = "<group>"; };
+		30548D2627FB8BA500626F07 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		30548D2827FB8BD400626F07 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
+		6908691E7216404BAB1586B8 /* Pods-HLPDialogTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HLPDialogTest.release.xcconfig"; path = "Target Support Files/Pods-HLPDialogTest/Pods-HLPDialogTest.release.xcconfig"; sourceTree = "<group>"; };
+		69A1C6398AAE287059974B39 /* Pods_HLPDialog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HLPDialog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		73B7137066C123C49235F58E /* Pods-HLPDialog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HLPDialog.debug.xcconfig"; path = "Target Support Files/Pods-HLPDialog/Pods-HLPDialog.debug.xcconfig"; sourceTree = "<group>"; };
 		7E1BE48D1F25C99600FF17BD /* DialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogViewController.swift; sourceTree = "<group>"; };
 		7EDAFE641F29DB4400368058 /* HLPDialogTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HLPDialogTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EDAFE661F29DB4400368058 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -76,6 +77,7 @@
 		7EDAFE701F29DB4400368058 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7EDAFE721F29DB4400368058 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7EDAFE7B1F29E0DA00368058 /* DummyTTS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DummyTTS.swift; sourceTree = "<group>"; };
+		90E987ACDF91B4638D9A7D94 /* Pods-HLPDialogTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HLPDialogTest.debug.xcconfig"; path = "Target Support Files/Pods-HLPDialogTest/Pods-HLPDialogTest.debug.xcconfig"; sourceTree = "<group>"; };
 		A9791D8D1F90A7FB00631165 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		A9C39A2821BA247200EF5F5D /* AssistantV1.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssistantV1.framework; path = Carthage/Build/iOS/AssistantV1.framework; sourceTree = "<group>"; };
 		A9CD957C1F21D5DE00A00D5D /* HLPDialog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HLPDialog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -96,6 +98,20 @@
 		A9CD95AC1F21DEBE00A00D5D /* TextToSpeech.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextToSpeech.swift; sourceTree = "<group>"; };
 		A9EF78041F2F0B9600AC72D8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A9EF78051F2F0B9C00AC72D8 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E28C478528131F4900DA1AFE /* RestKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RestKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E28C478928131F6C00DA1AFE /* RestKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RestKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E28C478C28131FDC00DA1AFE /* RestKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RestKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E28C478F2813225C00DA1AFE /* Pods_HLPDialog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_HLPDialog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E28C47922813235100DA1AFE /* RestKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RestKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E28C47952813236000DA1AFE /* RestKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RestKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E28C4798281470FB00DA1AFE /* RestKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RestKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E28C479A2814715E00DA1AFE /* RestKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RestKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E28C47A0281477CA00DA1AFE /* RestKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RestKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E28C47A72815D85500DA1AFE /* RestKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RestKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E28C47A92819669500DA1AFE /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Main.strings; sourceTree = "<group>"; };
+		E28C47AA2819669500DA1AFE /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		E28C47AB2819669500DA1AFE /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F8F9B2B2D7C8FA0403EB9254 /* Pods_HLPDialogTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HLPDialogTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,10 +119,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9C39A2A21BA256A00EF5F5D /* AssistantV1.framework in Frameworks */,
-				7EDAFE761F29DB5300368058 /* HLPDialog.framework in Frameworks */,
+				E28C479F2814752A00DA1AFE /* AssistantV1 in Frameworks */,
 				7EDAFE7F1F29E63100368058 /* Speech.framework in Frameworks */,
-				7EDAFE821F29E65500368058 /* RestKit.framework in Frameworks */,
+				CF2CD153193713DE95AF1A3A /* Pods_HLPDialogTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,18 +129,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9C39A2921BA247200EF5F5D /* AssistantV1.framework in Frameworks */,
 				A9791D8E1F90A7FB00631165 /* AVFoundation.framework in Frameworks */,
 				A9CD958E1F21DCFA00A00D5D /* Foundation.framework in Frameworks */,
-				A9CD958A1F21DBE100A00D5D /* RestKit.framework in Frameworks */,
 				A9CD95921F21DD0C00A00D5D /* Speech.framework in Frameworks */,
+				E28C478428131EF700DA1AFE /* AssistantV1 in Frameworks */,
 				A9CD95901F21DD0200A00D5D /* UIKit.framework in Frameworks */,
+				C316801741108B42476A2860 /* Pods_HLPDialog.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		79A2F3B72E1903ED2B8803FA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				73B7137066C123C49235F58E /* Pods-HLPDialog.debug.xcconfig */,
+				2309FB393A849FC828FC95AD /* Pods-HLPDialog.release.xcconfig */,
+				90E987ACDF91B4638D9A7D94 /* Pods-HLPDialogTest.debug.xcconfig */,
+				6908691E7216404BAB1586B8 /* Pods-HLPDialogTest.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		7EDAFE651F29DB4400368058 /* HLPDialogTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -147,6 +173,7 @@
 				7EDAFE651F29DB4400368058 /* HLPDialogTest */,
 				A9CD957D1F21D5DE00A00D5D /* Products */,
 				A9CD95881F21DBE100A00D5D /* Frameworks */,
+				79A2F3B72E1903ED2B8803FA /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -177,12 +204,24 @@
 		A9CD95881F21DBE100A00D5D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E28C47A72815D85500DA1AFE /* RestKit.framework */,
+				E28C47A0281477CA00DA1AFE /* RestKit.framework */,
+				E28C479A2814715E00DA1AFE /* RestKit.framework */,
+				E28C4798281470FB00DA1AFE /* RestKit.framework */,
+				E28C47952813236000DA1AFE /* RestKit.framework */,
+				E28C47922813235100DA1AFE /* RestKit.framework */,
+				E28C478F2813225C00DA1AFE /* Pods_HLPDialog.framework */,
+				E28C478C28131FDC00DA1AFE /* RestKit.framework */,
+				E28C478928131F6C00DA1AFE /* RestKit.framework */,
+				E28C478528131F4900DA1AFE /* RestKit.framework */,
 				A9791D8D1F90A7FB00631165 /* AVFoundation.framework */,
 				A9C39A2821BA247200EF5F5D /* AssistantV1.framework */,
 				A9CD958D1F21DCFA00A00D5D /* Foundation.framework */,
 				A9CD95891F21DBE100A00D5D /* RestKit.framework */,
 				A9CD95911F21DD0C00A00D5D /* Speech.framework */,
 				A9CD958F1F21DD0200A00D5D /* UIKit.framework */,
+				69A1C6398AAE287059974B39 /* Pods_HLPDialog.framework */,
+				F8F9B2B2D7C8FA0403EB9254 /* Pods_HLPDialogTest.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -225,17 +264,22 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7EDAFE751F29DB4400368058 /* Build configuration list for PBXNativeTarget "HLPDialogTest" */;
 			buildPhases = (
+				49B75F9E6B55C61D4E0EDB07 /* [CP] Check Pods Manifest.lock */,
 				7EDAFE601F29DB4400368058 /* Sources */,
 				7EDAFE611F29DB4400368058 /* Frameworks */,
 				7EDAFE621F29DB4400368058 /* Resources */,
-				7EDAFE7A1F29DB5400368058 /* Embed Frameworks */,
+				30548D2B27FB8C8D00626F07 /* ShellScript */,
+				E28C47A6281478AF00DA1AFE /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				7EDAFE791F29DB5300368058 /* PBXTargetDependency */,
+				E28C47A5281478AF00DA1AFE /* PBXTargetDependency */,
 			);
 			name = HLPDialogTest;
+			packageProductDependencies = (
+				E28C479E2814752A00DA1AFE /* AssistantV1 */,
+			);
 			productName = HLPDialogTest;
 			productReference = 7EDAFE641F29DB4400368058 /* HLPDialogTest.app */;
 			productType = "com.apple.product-type.application";
@@ -244,6 +288,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A9CD95841F21D5DE00A00D5D /* Build configuration list for PBXNativeTarget "HLPDialog" */;
 			buildPhases = (
+				7970118E312AB1AA24F0D925 /* [CP] Check Pods Manifest.lock */,
 				A9CD95771F21D5DE00A00D5D /* Sources */,
 				A9CD95781F21D5DE00A00D5D /* Frameworks */,
 				A9CD95791F21D5DE00A00D5D /* Headers */,
@@ -255,6 +300,9 @@
 			dependencies = (
 			);
 			name = HLPDialog;
+			packageProductDependencies = (
+				E28C478328131EF700DA1AFE /* AssistantV1 */,
+			);
 			productName = HLPDialog;
 			productReference = A9CD957C1F21D5DE00A00D5D /* HLPDialog.framework */;
 			productType = "com.apple.product-type.framework";
@@ -266,13 +314,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1320;
 				ORGANIZATIONNAME = HULOP;
 				TargetAttributes = {
 					7EDAFE631F29DB4400368058 = {
 						CreatedOnToolsVersion = 8.3.3;
 						LastSwiftMigration = 1000;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 					A9CD957B1F21D5DE00A00D5D = {
 						CreatedOnToolsVersion = 8.3.3;
@@ -283,16 +331,19 @@
 			};
 			buildConfigurationList = A9CD95761F21D5DE00A00D5D /* Build configuration list for PBXProject "HLPDialog" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 				ja,
 				"en-US",
+				ar,
 			);
 			mainGroup = A9CD95721F21D5DE00A00D5D;
+			packageReferences = (
+				E28C478228131EF700DA1AFE /* XCRemoteSwiftPackageReference "swift-sdk" */,
+			);
 			productRefGroup = A9CD957D1F21D5DE00A00D5D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -326,20 +377,80 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		30548D2B27FB8C8D00626F07 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n";
+		};
+		49B75F9E6B55C61D4E0EDB07 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HLPDialogTest-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7970118E312AB1AA24F0D925 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HLPDialog-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		A9CD95871F21DA9800A00D5D /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/AssistantV1.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RestKit.framework",
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+			shellScript = "
+";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -374,10 +485,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		7EDAFE791F29DB5300368058 /* PBXTargetDependency */ = {
+		E28C47A5281478AF00DA1AFE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = A9CD957B1F21D5DE00A00D5D /* HLPDialog */;
-			targetProxy = 7EDAFE781F29DB5300368058 /* PBXContainerItemProxy */;
+			targetProxy = E28C47A4281478AF00DA1AFE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -386,6 +497,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				7EDAFE6B1F29DB4400368058 /* Base */,
+				30548D2627FB8BA500626F07 /* en */,
+				30548D2827FB8BD400626F07 /* ja */,
+				E28C47A92819669500DA1AFE /* ar */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -394,6 +508,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				7EDAFE701F29DB4400368058 /* Base */,
+				E28C47AA2819669500DA1AFE /* ar */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -403,6 +518,7 @@
 			children = (
 				A9EF78041F2F0B9600AC72D8 /* en */,
 				A9EF78051F2F0B9C00AC72D8 /* ja */,
+				E28C47AB2819669500DA1AFE /* ar */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -412,45 +528,53 @@
 /* Begin XCBuildConfiguration section */
 		7EDAFE731F29DB4400368058 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 90E987ACDF91B4638D9A7D94 /* Pods-HLPDialogTest.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = HLPDialogTest/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.hulop.HLPDialogTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		7EDAFE741F29DB4400368058 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6908691E7216404BAB1586B8 /* Pods-HLPDialogTest.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = HLPDialogTest/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.hulop.HLPDialogTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -480,6 +604,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -505,7 +630,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -543,6 +668,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -562,10 +688,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -575,6 +702,7 @@
 		};
 		A9CD95851F21D5DE00A00D5D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 73B7137066C123C49235F58E /* Pods-HLPDialog.debug.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ENABLE_MODULES = YES;
@@ -591,21 +719,27 @@
 				);
 				INFOPLIST_FILE = HLPDialog/Info.plist;
 				INSTALL_PATH = "@rpath";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.hulop.HLPDialog;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "$(SWIFT_MODULE_NAME)-Swift.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		A9CD95861F21D5DE00A00D5D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2309FB393A849FC828FC95AD /* Pods-HLPDialog.release.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ENABLE_MODULES = YES;
@@ -622,15 +756,20 @@
 				);
 				INFOPLIST_FILE = HLPDialog/Info.plist;
 				INSTALL_PATH = "@rpath";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.hulop.HLPDialog;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "$(SWIFT_MODULE_NAME)-Swift.h";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -665,6 +804,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E28C478228131EF700DA1AFE /* XCRemoteSwiftPackageReference "swift-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/watson-developer-cloud/swift-sdk.git";
+			requirement = {
+				kind = exactVersion;
+				version = 1.4.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E28C478328131EF700DA1AFE /* AssistantV1 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E28C478228131EF700DA1AFE /* XCRemoteSwiftPackageReference "swift-sdk" */;
+			productName = AssistantV1;
+		};
+		E28C479E2814752A00DA1AFE /* AssistantV1 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E28C478228131EF700DA1AFE /* XCRemoteSwiftPackageReference "swift-sdk" */;
+			productName = AssistantV1;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A9CD95731F21D5DE00A00D5D /* Project object */;
 }
