@@ -65,6 +65,8 @@
 /* Begin PBXFileReference section */
 		30548D2627FB8BA500626F07 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		30548D2827FB8BD400626F07 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
+		3062D026282AF6D3005AC107 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Main.strings; sourceTree = "<group>"; };
+		3062D027282AF6DA005AC107 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7E1BE48D1F25C99600FF17BD /* DialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogViewController.swift; sourceTree = "<group>"; };
 		7EDAFE641F29DB4400368058 /* HLPDialogTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HLPDialogTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EDAFE661F29DB4400368058 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 				Base,
 				ja,
 				"en-US",
+				ar,
 			);
 			mainGroup = A9CD95721F21D5DE00A00D5D;
 			productRefGroup = A9CD957D1F21D5DE00A00D5D /* Products */;
@@ -406,6 +409,7 @@
 				7EDAFE6B1F29DB4400368058 /* Base */,
 				30548D2627FB8BA500626F07 /* en */,
 				30548D2827FB8BD400626F07 /* ja */,
+				3062D026282AF6D3005AC107 /* ar */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -423,6 +427,7 @@
 			children = (
 				A9EF78041F2F0B9600AC72D8 /* en */,
 				A9EF78051F2F0B9C00AC72D8 /* ja */,
+				3062D027282AF6DA005AC107 /* ar */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
