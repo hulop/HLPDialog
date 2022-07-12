@@ -1,0 +1,15 @@
+
+/* Class = "UIButton"; normalTitle = "Listen"; ObjectID = "IDT-ud-NA1"; */
+"IDT-ud-NA1.normalTitle" = "Listen";
+
+/* Class = "UIButton"; normalTitle = "Speak"; ObjectID = "Uuq-b9-eKS"; */
+"Uuq-b9-eKS.normalTitle" = "Speak";
+
+/* Class = "UIButton"; normalTitle = "Inactive"; ObjectID = "fya-np-b0o"; */
+"fya-np-b0o.normalTitle" = "Inactive";
+
+/* Class = "UIButton"; normalTitle = "Recognize"; ObjectID = "jOx-rP-lT7"; */
+"jOx-rP-lT7.normalTitle" = "Recognize";
+
+/* Class = "UIButton"; normalTitle = "Reset"; ObjectID = "yyX-HB-AkD"; */
+"yyX-HB-AkD.normalTitle" = "Reset";

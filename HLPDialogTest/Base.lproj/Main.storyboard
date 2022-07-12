@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="dyp-Df-rXp">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="dyp-Df-rXp">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -14,7 +12,7 @@
             <objects>
                 <navigationController id="dyp-Df-rXp" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="kmF-8e-c71">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -37,41 +35,36 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fya-np-b0o">
-                                <rect key="frame" x="160" y="64" width="54" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fya-np-b0o">
+                                <rect key="frame" x="160.5" y="64" width="54" height="30"/>
                                 <state key="normal" title="Inactive"/>
                                 <connections>
                                     <action selector="goInactive:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZGs-0H-hXJ"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uuq-b9-eKS">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uuq-b9-eKS">
                                 <rect key="frame" x="166" y="102" width="43" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Speak"/>
                                 <connections>
                                     <action selector="goSpeak:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iyl-u5-hnB"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IDT-ud-NA1">
-                                <rect key="frame" x="167" y="140" width="42" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IDT-ud-NA1">
+                                <rect key="frame" x="166.5" y="140" width="42" height="30"/>
                                 <state key="normal" title="Listen"/>
                                 <connections>
                                     <action selector="goListen:" destination="BYZ-38-t0r" eventType="touchUpInside" id="At4-xj-xFc"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jOx-rP-lT7">
-                                <rect key="frame" x="151" y="178" width="72" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jOx-rP-lT7">
+                                <rect key="frame" x="151.5" y="178" width="72" height="30"/>
                                 <state key="normal" title="Recognize"/>
                                 <connections>
                                     <action selector="goRecognize:" destination="BYZ-38-t0r" eventType="touchUpInside" id="K6h-Gc-5Tf"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yyX-HB-AkD">
-                                <rect key="frame" x="169" y="216" width="39" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yyX-HB-AkD">
+                                <rect key="frame" x="168" y="216" width="39" height="30"/>
                                 <state key="normal" title="Reset"/>
                                 <connections>
                                     <action selector="goReset:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KAx-Ha-7Sc"/>
@@ -79,6 +72,18 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="yyX-HB-AkD" firstAttribute="centerX" secondItem="fya-np-b0o" secondAttribute="centerX" id="0zr-JT-GXB"/>
+                            <constraint firstItem="IDT-ud-NA1" firstAttribute="top" secondItem="Uuq-b9-eKS" secondAttribute="bottom" constant="8" symbolic="YES" id="4pf-7t-djO"/>
+                            <constraint firstItem="Uuq-b9-eKS" firstAttribute="top" secondItem="fya-np-b0o" secondAttribute="bottom" constant="8" symbolic="YES" id="B97-lJ-Bkp"/>
+                            <constraint firstItem="jOx-rP-lT7" firstAttribute="centerX" secondItem="fya-np-b0o" secondAttribute="centerX" id="C9R-LD-WWB"/>
+                            <constraint firstItem="Uuq-b9-eKS" firstAttribute="centerX" secondItem="fya-np-b0o" secondAttribute="centerX" id="E0q-c7-2nx"/>
+                            <constraint firstItem="fya-np-b0o" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Yyc-b2-jPO"/>
+                            <constraint firstItem="yyX-HB-AkD" firstAttribute="top" secondItem="jOx-rP-lT7" secondAttribute="bottom" constant="8" symbolic="YES" id="aUs-bE-gS3"/>
+                            <constraint firstItem="IDT-ud-NA1" firstAttribute="centerX" secondItem="fya-np-b0o" secondAttribute="centerX" id="ofg-3Y-qav"/>
+                            <constraint firstItem="fya-np-b0o" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="r4n-Jg-gUM"/>
+                            <constraint firstItem="jOx-rP-lT7" firstAttribute="top" secondItem="IDT-ud-NA1" secondAttribute="bottom" constant="8" symbolic="YES" id="z0h-Vb-OOz"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="9Ta-7q-wWu"/>
                 </viewController>

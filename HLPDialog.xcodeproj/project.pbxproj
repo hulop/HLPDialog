@@ -19,9 +19,8 @@
 		306C7FD0265D82B900E5928E /* TextToSpeech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306C7FC2265D82B900E5928E /* TextToSpeech.swift */; };
 		306C7FD1265D82B900E5928E /* CustomArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306C7FC3265D82B900E5928E /* CustomArrow.swift */; };
 		306C7FD3265D82EF00E5928E /* BundleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306C7FD2265D82EF00E5928E /* BundleExtension.swift */; };
-		306C7FEF265D931400E5928E /* en.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 306C7FEB265D931400E5928E /* en.lproj */; };
 		306C7FF0265D931400E5928E /* icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 306C7FEC265D931400E5928E /* icons.xcassets */; };
-		306C7FF2265D931400E5928E /* ja.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 306C7FEE265D931400E5928E /* ja.lproj */; };
+		30ACE5D9287DE07D002FDD3E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 30ACE5D7287DE07D002FDD3E /* Localizable.strings */; };
 		30F0C18C26AA9F07004BE661 /* LocalConversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F0C18B26AA9F07004BE661 /* LocalConversation.swift */; };
 		30F0C18E26AA9F19004BE661 /* JSHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F0C18D26AA9F19004BE661 /* JSHelper.swift */; };
 		30F0C19026AA9FBC004BE661 /* conv.js in Resources */ = {isa = PBXBuildFile; fileRef = 30F0C18F26AA9FBC004BE661 /* conv.js */; };
@@ -78,10 +77,15 @@
 		306C7FC2265D82B900E5928E /* TextToSpeech.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextToSpeech.swift; path = Sources/HLPDialog/TextToSpeech.swift; sourceTree = SOURCE_ROOT; };
 		306C7FC3265D82B900E5928E /* CustomArrow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomArrow.swift; path = Sources/HLPDialog/CustomArrow.swift; sourceTree = SOURCE_ROOT; };
 		306C7FD2265D82EF00E5928E /* BundleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleExtension.swift; sourceTree = SOURCE_ROOT; };
-		306C7FEB265D931400E5928E /* en.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; name = en.lproj; path = Sources/HLPDialog/en.lproj; sourceTree = "<group>"; };
 		306C7FEC265D931400E5928E /* icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = icons.xcassets; path = Sources/HLPDialog/icons.xcassets; sourceTree = "<group>"; };
 		306C7FED265D931400E5928E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Sources/HLPDialog/Info.plist; sourceTree = "<group>"; };
-		306C7FEE265D931400E5928E /* ja.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ja.lproj; path = Sources/HLPDialog/ja.lproj; sourceTree = "<group>"; };
+		30ACE5C0287DDCE9002FDD3E /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Main.strings; sourceTree = "<group>"; };
+		30ACE5C1287DDCE9002FDD3E /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		30ACE5C2287DDD28002FDD3E /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
+		30ACE5C3287DDD28002FDD3E /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		30ACE5D8287DE07D002FDD3E /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = Sources/HLPDialog/ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		30ACE5DA287DE08A002FDD3E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Sources/HLPDialog/en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		30ACE5DB287DE093002FDD3E /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = Sources/HLPDialog/ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		30F0C18B26AA9F07004BE661 /* LocalConversation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocalConversation.swift; path = "../../cabot-app/CaBot/LocalConversation.swift"; sourceTree = "<group>"; };
 		30F0C18D26AA9F19004BE661 /* JSHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSHelper.swift; sourceTree = "<group>"; };
 		30F0C18F26AA9FBC004BE661 /* conv.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = conv.js; sourceTree = "<group>"; };
@@ -146,10 +150,9 @@
 		306C7FF3265D933000E5928E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				306C7FEB265D931400E5928E /* en.lproj */,
+				30ACE5D7287DE07D002FDD3E /* Localizable.strings */,
 				306C7FEC265D931400E5928E /* icons.xcassets */,
 				306C7FED265D931400E5928E /* Info.plist */,
-				306C7FEE265D931400E5928E /* ja.lproj */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -286,8 +289,8 @@
 			knownRegions = (
 				en,
 				Base,
+				ar,
 				ja,
-				"en-US",
 			);
 			mainGroup = A9CD95721F21D5DE00A00D5D;
 			packageReferences = (
@@ -319,9 +322,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				306C7FEF265D931400E5928E /* en.lproj in Resources */,
 				306C7FF0265D931400E5928E /* icons.xcassets in Resources */,
-				306C7FF2265D931400E5928E /* ja.lproj in Resources */,
+				30ACE5D9287DE07D002FDD3E /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,10 +371,22 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		30ACE5D7287DE07D002FDD3E /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				30ACE5D8287DE07D002FDD3E /* ja */,
+				30ACE5DA287DE08A002FDD3E /* en */,
+				30ACE5DB287DE093002FDD3E /* ar */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		7EDAFE6A1F29DB4400368058 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				7EDAFE6B1F29DB4400368058 /* Base */,
+				30ACE5C0287DDCE9002FDD3E /* ar */,
+				30ACE5C2287DDD28002FDD3E /* ja */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -381,6 +395,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				7EDAFE701F29DB4400368058 /* Base */,
+				30ACE5C1287DDCE9002FDD3E /* ar */,
+				30ACE5C3287DDD28002FDD3E /* ja */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
